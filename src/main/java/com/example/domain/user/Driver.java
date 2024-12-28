@@ -1,4 +1,4 @@
-package com.lordstdpa.domain.user;
+package com.example.domain.user;
 
 public class Driver extends User {
     Driver(

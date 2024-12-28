@@ -1,4 +1,4 @@
-package com.lordstdpa.domain.booking;
+package com.example.domain.booking;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

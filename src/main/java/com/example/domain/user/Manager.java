@@ -1,4 +1,4 @@
-package com.lordstdpa.domain.user;
+package com.example.domain.user;
 
 public class Manager extends User {
     Manager(

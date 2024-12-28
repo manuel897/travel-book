@@ -1,4 +1,4 @@
-package com.lordstdpa.domain.booking;
+package com.example.domain.booking;
 
 public class BookingConflictException extends RuntimeException {
     public BookingConflictException() {

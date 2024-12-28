@@ -1,4 +1,4 @@
-package com.lordstdpa.domain.user;
+package com.example.domain.user;
 
 public enum UserRole {
     MANAGER,
