@@ -6,7 +6,10 @@ public class UserDataModel {
     String lastName;
     String userRole;
 
-    public String getRole() {
-        return userRole;
+    public UserDataModel(String userId, String firstName, String lastName, String userRole) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userRole = userRole;
     }
 }
