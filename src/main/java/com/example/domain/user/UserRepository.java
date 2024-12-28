@@ -1,6 +1,6 @@
-package com.lordstdpa.domain.user;
+package com.example.domain.user;
 
-import com.lordstdpa.data.user.UserDataModel;
+import com.example.data.user.UserDataModel;
 
 public interface UserRepository
 {

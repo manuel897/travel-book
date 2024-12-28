@@ -1,6 +1,4 @@
-package com.lordstdpa.data.user;
-
-import com.lordstdpa.domain.user.UserRole;
+package com.example.data.user;
 
 public class UserDataModel {
     String userId;

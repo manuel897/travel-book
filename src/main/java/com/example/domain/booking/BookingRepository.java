@@ -1,6 +1,6 @@
-package com.lordstdpa.domain.booking;
+package com.example.domain.booking;
 
-import com.lordstdpa.data.booking.BookingDataModel;
+import com.example.data.booking.BookingDataModel;
 
 import java.time.LocalDateTime;
 

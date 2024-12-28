@@ -1,4 +1,4 @@
-package com.lordstdpa.domain.vehicle;
+package com.example.domain.vehicle;
 
 public class Vehicle {
     String numberPlate;
