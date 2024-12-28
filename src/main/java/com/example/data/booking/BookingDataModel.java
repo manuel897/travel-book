@@ -1,5 +1,6 @@
 package com.example.data.booking;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
@@ -7,6 +8,7 @@ public class BookingDataModel {
     String bookingId;
     String name;
     String notes;
+    String numberPlate;
     String departure;
     String arrival;
     Double plannedDistance;
@@ -18,9 +20,11 @@ public class BookingDataModel {
     String secondDriverId;
     String ownerId;
     Instant lastModifiedAt;
+    BigDecimal initialQuote;
 
     public BookingDataModel(
             String bookingId,
+            String numberPlate,
             String name,
             String notes,
             String departure,
@@ -33,7 +37,8 @@ public class BookingDataModel {
             String firstDriverId,
             String secondDriverId,
             String ownerId,
-            Instant lastModifiedAt
+            Instant lastModifiedAt,
+            BigDecimal initialQuote
     ) {
         this.bookingId = bookingId;
         this.name = name;
@@ -49,5 +54,6 @@ public class BookingDataModel {
         this.secondDriverId = secondDriverId;
         this.ownerId = ownerId;
         this.lastModifiedAt = lastModifiedAt;
+        this.initialQuote = initialQuote;
     }
 }

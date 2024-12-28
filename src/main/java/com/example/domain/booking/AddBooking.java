@@ -12,22 +12,21 @@ public class AddBooking {
     private BookingDataModel existingBooking;
 
     public void call(BookingModel bookingModel) {
-        final UserDataModel existingUser = userRepository.findByUserId(bookingModel.getUserId());
+        final UserDataModel existingUser = userRepository.findByUserId(bookingModel.userId);
         if(existingUser == null) {
-            throw new UserNotFoundException("User id " + bookingModel.getUserId() + "not found");
+            throw new UserNotFoundException("User id " + bookingModel.userId + "not found");
         }
 
-        final BookingDataModel existingBooking = bookingRepository.findBy(bookingModel.getNumberPlate(), bookingModel.getStart());
+        final BookingDataModel existingBooking = bookingRepository.findBy(bookingModel.numberPlate, bookingModel.start);
         if(existingBooking != null) {
             throw new BookingConflictException();
         }
 
-        final String bookingStatusToSave = UserRole.DRIVER.name().equals(existingUser.getRole())
-            ? BookingStatus.PENDING.name()
-            : BookingStatus.CONFIRMED.name();
+        // TODO find vehicle
 
         final BookingDataModel newBookingDataModel = new BookingDataModel(
                 null,
+                bookingModel.numberPlate,
                 bookingModel.name,
                 bookingModel.notes,
                 bookingModel.departure,
@@ -36,11 +35,12 @@ public class AddBooking {
                 bookingModel.distance,
                 bookingModel.start,
                 bookingModel.end,
-                bookingStatusToSave,
+                bookingModel.bookingStatus.name(),
                 bookingModel.firstDriverId,
                 bookingModel.secondDriverId,
                 bookingModel.userId,
-                bookingModel.lastModifiedAt
+                bookingModel.lastModifiedAt,
+                bookingModel.initialQuote
                 );
 
         bookingRepository.createBooking(newBookingDataModel);

@@ -4,6 +4,7 @@ import com.example.domain.user.Driver;
 import com.example.domain.user.User;
 import com.example.domain.vehicle.Vehicle;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
@@ -19,4 +20,5 @@ public class Booking {
     Driver secondDriver;
     User createdBy;
     Instant lastModifiedAt;
+    BigDecimal initialQuote;
 }
