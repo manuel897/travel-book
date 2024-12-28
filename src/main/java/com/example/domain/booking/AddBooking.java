@@ -17,13 +17,6 @@ public class AddBooking {
             throw new UserNotFoundException("User id " + bookingModel.userId + "not found");
         }
 
-        final BookingDataModel existingBooking = bookingRepository.findBy(bookingModel.numberPlate, bookingModel.start);
-        if(existingBooking != null) {
-            throw new BookingConflictException();
-        }
-
-        // TODO find vehicle
-
         final BookingDataModel newBookingDataModel = new BookingDataModel(
                 null,
                 bookingModel.numberPlate,
