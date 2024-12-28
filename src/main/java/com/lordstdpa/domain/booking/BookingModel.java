@@ -4,11 +4,12 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class BookingModel {
+    String numberPlate;
     String name;
     String notes;
     String departure;
     String arrival;
-    Route route;
+    Double distance;
     LocalDateTime start;
     LocalDateTime end;
     BookingStatus bookingStatus;
@@ -19,5 +20,13 @@ public class BookingModel {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getNumberPlate() {
+        return numberPlate;
+    }
+
+    public LocalDateTime getStart() {
+        return start;
     }
 }
