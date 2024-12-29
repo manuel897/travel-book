@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class BookingModel {
+    String bookingId;
     String numberPlate;
     String name;
     String notes;

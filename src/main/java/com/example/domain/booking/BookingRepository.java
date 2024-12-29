@@ -5,9 +5,10 @@ import com.example.data.booking.BookingDataModel;
 import java.time.LocalDateTime;
 
 public interface BookingRepository {
-    void createBooking(BookingDataModel bookingDataModel);
+    String createBooking(BookingDataModel bookingDataModel);
+    String updateBooking(BookingDataModel bookingDataModel);
 
-    void findByBookingId(String bookingId);
+    BookingDataModel findByBookingId(String bookingId);
 
     BookingDataModel findBy(String numberPlate, LocalDateTime start);
 }

@@ -12,4 +12,8 @@ public class UserDataModel {
         this.lastName = lastName;
         this.userRole = userRole;
     }
+
+    public String getUserRole() {
+        return userRole;
+    }
 }

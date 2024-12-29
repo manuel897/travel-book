@@ -22,6 +22,136 @@ public class BookingDataModel {
     Instant lastModifiedAt;
     BigDecimal initialQuote;
 
+    public BookingDataModel() {}
+
+    public String getBookingStatusId() {
+        return bookingStatusId;
+    }
+
+    public void setBookingStatusId(String bookingStatusId) {
+        this.bookingStatusId = bookingStatusId;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getNumberPlate() {
+        return numberPlate;
+    }
+
+    public void setNumberPlate(String numberPlate) {
+        this.numberPlate = numberPlate;
+    }
+
+    public String getDeparture() {
+        return departure;
+    }
+
+    public void setDeparture(String departure) {
+        this.departure = departure;
+    }
+
+    public String getArrival() {
+        return arrival;
+    }
+
+    public void setArrival(String arrival) {
+        this.arrival = arrival;
+    }
+
+    public Double getPlannedDistance() {
+        return plannedDistance;
+    }
+
+    public void setPlannedDistance(Double plannedDistance) {
+        this.plannedDistance = plannedDistance;
+    }
+
+    public String getUnitOfMeasurement() {
+        return unitOfMeasurement;
+    }
+
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
+        this.unitOfMeasurement = unitOfMeasurement;
+    }
+
+    public LocalDateTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDateTime start) {
+        this.start = start;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
+    }
+
+    public String getFirstDriverId() {
+        return firstDriverId;
+    }
+
+    public void setFirstDriverId(String firstDriverId) {
+        this.firstDriverId = firstDriverId;
+    }
+
+    public String getSecondDriverId() {
+        return secondDriverId;
+    }
+
+    public void setSecondDriverId(String secondDriverId) {
+        this.secondDriverId = secondDriverId;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Instant getLastModifiedAt() {
+        return lastModifiedAt;
+    }
+
+    public void setLastModifiedAt(Instant lastModifiedAt) {
+        this.lastModifiedAt = lastModifiedAt;
+    }
+
+    public BigDecimal getInitialQuote() {
+        return initialQuote;
+    }
+
+    public void setInitialQuote(BigDecimal initialQuote) {
+        this.initialQuote = initialQuote;
+    }
+
     public BookingDataModel(
             String bookingId,
             String numberPlate,

@@ -22,16 +22,19 @@ import static org.mockito.internal.util.MockUtil.resetMock;
 class AddBookingTest {
     BookingRepository mockBookingRepository;
     UserRepository mockUserRepository;
+    BookingPresenter mockBookingPresenter;
     AddBooking addBooking;
 
     @BeforeEach
     void setUp() {
         mockUserRepository = mock(UserRepository.class);
         mockBookingRepository = mock(BookingRepository.class);
+        mockBookingPresenter = mock(BookingPresenter.class);
 
         addBooking = new AddBooking(
                 mockBookingRepository,
-                mockUserRepository
+                mockUserRepository,
+                mockBookingPresenter
         );
 
         final UserDataModel dummyUser = new UserDataModel(
@@ -41,7 +44,8 @@ class AddBookingTest {
         "userRole");
 
         when(mockUserRepository.findByUserId(anyString())).thenReturn(dummyUser);
-        doNothing().when(mockBookingRepository).createBooking(any(BookingDataModel.class));
+        when(mockBookingRepository.createBooking(any(BookingDataModel.class))).thenReturn("");
+        doNothing().when(mockBookingPresenter).presentBookingCreated(anyString());
     }
 
     @AfterEach
@@ -51,11 +55,12 @@ class AddBookingTest {
     }
 
     @Test
-    @DisplayName("when user cannot be found, booking cannot be created and a exception is thrown")
+    @DisplayName("when user is found, booking is created and success is presented")
     void userFound() {
         addBooking.call(buildBookingModel());
 
         verify(mockBookingRepository, times(1)).createBooking(any(BookingDataModel.class));
+        verify(mockBookingPresenter, times(1)).presentBookingCreated(anyString());
     }
 
     @Test
