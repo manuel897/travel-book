@@ -4,7 +4,9 @@ import com.example.data.booking.BookingDataModel;
 import com.example.data.user.UserDataModel;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AddBooking {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
@@ -20,7 +22,7 @@ public class AddBooking {
         this.bookingPresenter = bookingPresenter;
     }
 
-    public void call(BookingModel bookingModel) {
+    public void call(BookingInputDto bookingModel) {
         final UserDataModel existingUser = userRepository.findByUserId(bookingModel.userId);
         if(existingUser == null) {
             throw new UserNotFoundException("User id " + bookingModel.userId + " not found");

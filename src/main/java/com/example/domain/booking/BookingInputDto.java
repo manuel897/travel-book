@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
-public class BookingModel {
+public class BookingInputDto {
     String bookingId;
     String numberPlate;
     String name;

@@ -5,9 +5,11 @@ import com.example.data.user.UserDataModel;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
 import com.example.domain.user.UserRole;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@Component
 public class UpdateBooking {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
@@ -23,7 +25,7 @@ public class UpdateBooking {
         this.bookingPresenter = bookingPresenter;
     }
 
-    public void call(BookingModel bookingModel) {
+    public void call(BookingInputDto bookingModel) {
         final UserDataModel actionUser = userRepository.findByUserId(bookingModel.userId);
         if(actionUser == null) {
             throw new UserNotFoundException("User id " + bookingModel.userId + " not found");
