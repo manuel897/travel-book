@@ -1,5 +1,7 @@
 package com.example.data.booking;
 
+import com.example.domain.booking.BookingStatus;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -171,6 +173,7 @@ public class BookingDataModel {
             BigDecimal initialQuote
     ) {
         this.bookingId = bookingId;
+        this.numberPlate = numberPlate;
         this.name = name;
         this.notes = notes;
         this.departure = departure;
@@ -186,4 +189,14 @@ public class BookingDataModel {
         this.lastModifiedAt = lastModifiedAt;
         this.initialQuote = initialQuote;
     }
+
+    public static BookingStatus convertToBookingStatus(String bookingStatusId) {
+        return switch (bookingStatusId) {
+            case "0" -> BookingStatus.ENQUIRY;
+            case "1" -> BookingStatus.CONFIRMED;
+            case "2" -> BookingStatus.REJECTED;
+            default -> null;
+        };
+    }
 }
+
