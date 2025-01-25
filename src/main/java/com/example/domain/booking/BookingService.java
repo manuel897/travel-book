@@ -1,5 +1,8 @@
 package com.example.domain.booking;
 
+import com.example.models.booking.BookingInputDto;
+import com.example.models.booking.BookingSearchCriteria;
+
 public interface BookingService {
     void changeBooking(BookingInputDto bookingInput);
 

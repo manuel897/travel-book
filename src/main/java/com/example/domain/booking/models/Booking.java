@@ -1,7 +1,8 @@
-package com.example.domain.booking;
+package com.example.domain.booking.models;
 
+import com.example.domain.booking.Route;
 import com.example.domain.user.Driver;
-import com.example.domain.user.User;
+import com.example.domain.booking.User;
 import com.example.domain.vehicle.Vehicle;
 
 import java.math.BigDecimal;

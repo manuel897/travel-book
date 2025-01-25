@@ -1,5 +1,7 @@
 package com.example.domain.booking;
 
+import com.example.models.booking.BookingDto;
+
 import java.util.List;
 
 public interface BookingPresenter {

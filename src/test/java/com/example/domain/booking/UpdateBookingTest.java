@@ -1,18 +1,14 @@
 package com.example.domain.booking;
 
 import com.example.data.booking.BookingDataModel;
-import com.example.data.user.UserDataModel;
+import com.example.models.booking.BookingInputDto;
+import com.example.domain.booking.models.BookingNotFoundException;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
-import com.example.domain.user.UserRole;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,6 +17,9 @@ import static org.mockito.Mockito.*;
 import static org.mockito.internal.util.MockUtil.resetMock;
 
 class UpdateBookingTest {
+    private static final String DUMMY_USER_ID = "userId";
+    private static final String DUMMY_BOOKING_ID = "bookingId";
+
     BookingRepository mockBookingRepository;
     UserRepository mockUserRepository;
     BookingPresenter mockBookingPresenter;
@@ -28,20 +27,27 @@ class UpdateBookingTest {
 
     @BeforeEach
     void setUp() {
-        mockUserRepository = mock(UserRepository.class);
-        mockBookingRepository = mock(BookingRepository.class);
-        mockBookingPresenter = mock(BookingPresenter.class);
+        buildMocks();
+        setupMocks();
 
         updateBooking = new UpdateBooking(
                 mockBookingRepository,
                 mockUserRepository,
                 mockBookingPresenter
         );
+    }
 
-        when(mockUserRepository.findByUserId(anyString())).thenReturn(buildUserDataModel("U789"));
-        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(buildBookingDataModel());
+    private void setupMocks() {
+        when(mockUserRepository.findByUserId(anyString())).thenReturn(TestObjectBuilder.buildDriverUser(DUMMY_USER_ID));
+        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(TestObjectBuilder.buildBookingDataModel());
         when(mockBookingRepository.updateBooking(any(BookingDataModel.class))).thenReturn("");
         doNothing().when(mockBookingPresenter).presentBookingCreated(anyString());
+    }
+
+    private void buildMocks() {
+        mockUserRepository = mock(UserRepository.class);
+        mockBookingRepository = mock(BookingRepository.class);
+        mockBookingPresenter = mock(BookingPresenter.class);
     }
 
     @AfterEach
@@ -54,7 +60,11 @@ class UpdateBookingTest {
     @Test
     @DisplayName("when user and booking is found, booking is updated and success is presented")
     void userFound() {
-        updateBooking.call(buildBookingModel());
+        final BookingDataModel existingBooking = TestObjectBuilder.buildBookingDataModel();
+        existingBooking.setOwnerId(DUMMY_USER_ID);
+        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(existingBooking);
+
+        updateBooking.call(TestObjectBuilder.buildExistingBookingInput(DUMMY_BOOKING_ID ,DUMMY_USER_ID));
 
         verify(mockBookingRepository, times(1)).updateBooking(any(BookingDataModel.class));
         verify(mockBookingPresenter, times(1)).presentBookingUpdated(anyString());
@@ -65,7 +75,7 @@ class UpdateBookingTest {
     void userNotFound() {
         when(mockUserRepository.findByUserId(anyString())).thenReturn(null);
 
-        assertThrows(UserNotFoundException.class,() -> updateBooking.call(buildBookingModel()));
+        assertThrows(UserNotFoundException.class,() -> updateBooking.call(TestObjectBuilder.buildNewBookingInput(DUMMY_USER_ID)));
     }
 
     @Test
@@ -73,22 +83,19 @@ class UpdateBookingTest {
     void bookingNotFound() {
         when(mockBookingRepository.findByBookingId(anyString())).thenReturn(null);
 
-        assertThrows(BookingNotFoundException.class,() -> updateBooking.call(buildBookingModel()));
+        assertThrows(BookingNotFoundException.class,() -> updateBooking.call(TestObjectBuilder.buildNewBookingInput(DUMMY_USER_ID)));
     }
 
     @Test
     @DisplayName("when the user is the owner of the booking, update is allowed")
     void actionAllowedWhenUserIsOwner() {
         final String sameUser = "JANE";
-        final BookingInputDto bookingModel = buildBookingModel();
-        final BookingDataModel existingBooking = buildBookingDataModel();
+        final BookingDataModel existingBooking = TestObjectBuilder.buildBookingDataModel();
         existingBooking.setOwnerId(sameUser);
-        bookingModel.userId = sameUser;
-
-        when(mockUserRepository.findByUserId(anyString())).thenReturn(buildUserDataModel(sameUser));
+        when(mockUserRepository.findByUserId(anyString())).thenReturn(TestObjectBuilder.buildDriverUser(sameUser));
         when(mockBookingRepository.findByBookingId(anyString())).thenReturn(existingBooking);
 
-        updateBooking.call(bookingModel);
+        updateBooking.call(TestObjectBuilder.buildExistingBookingInput(DUMMY_BOOKING_ID, sameUser));
 
         verify(mockBookingPresenter, times(1)).presentBookingUpdated(anyString());
     }
@@ -96,12 +103,12 @@ class UpdateBookingTest {
     @Test
     @DisplayName("when the user is not the owner of the booking, update is not allowed")
     void actionNotAllowedWhenUserNotOwner() {
-        final BookingInputDto bookingModel = buildBookingModel();
-        final BookingDataModel existingBooking = buildBookingDataModel();
+        final BookingInputDto bookingModel = TestObjectBuilder.buildExistingBookingInput(DUMMY_BOOKING_ID, DUMMY_USER_ID);
+        final BookingDataModel existingBooking = TestObjectBuilder.buildBookingDataModel();
         existingBooking.setOwnerId("USER A");
         bookingModel.userId = "USER B";
 
-        when(mockUserRepository.findByUserId(anyString())).thenReturn(buildUserDataModel("USER B"));
+        when(mockUserRepository.findByUserId(anyString())).thenReturn(TestObjectBuilder.buildDriverUser("USER B"));
         when(mockBookingRepository.findByBookingId(anyString())).thenReturn(existingBooking);
 
         updateBooking.call(bookingModel);
@@ -113,74 +120,18 @@ class UpdateBookingTest {
     @Test
     @DisplayName("when the user is not the owner of the booking, update is allowed if the user is a manager")
     void actionAllowedWhenUserNotOwnerButManager() {
-        final BookingInputDto bookingModel = buildBookingModel();
-        final BookingDataModel existingBooking = buildBookingDataModel();
-        final UserDataModel existingUser = new UserDataModel(
-                "USER B",
-                "firstName",
-                "lastName",
-                UserRole.MANAGER.name());
-        existingBooking.setOwnerId("USER A");
-        bookingModel.userId = "USER B";
+        final String managerUserId = "MANAGER";
+        final BookingInputDto bookingInput = TestObjectBuilder.buildExistingBookingInput(DUMMY_BOOKING_ID, managerUserId);
+        final BookingDataModel existingBooking = TestObjectBuilder.buildBookingDataModel();
 
-        when(mockUserRepository.findByUserId(anyString())).thenReturn(existingUser);
+        existingBooking.setOwnerId("USER A");
+
+        when(mockUserRepository.findByUserId(anyString())).thenReturn(TestObjectBuilder.buildManagerUser(managerUserId));
         when(mockBookingRepository.findByBookingId(anyString())).thenReturn(existingBooking);
 
-        updateBooking.call(bookingModel);
+        updateBooking.call(bookingInput);
 
         verify(mockBookingPresenter, times(1)).presentBookingUpdated(anyString());
         verify(mockBookingPresenter, times(0)).presentActionNotAllowed();
-    }
-
-    private static BookingInputDto buildBookingModel() {
-        BookingInputDto bookingModel = new BookingInputDto();
-
-        bookingModel.bookingId = "123";
-        bookingModel.numberPlate = "ABC123";
-        bookingModel.name = "John Doe";
-        bookingModel.notes = "This is a dummy booking.";
-        bookingModel.departure = "New York";
-        bookingModel.arrival = "Los Angeles";
-        bookingModel.distance = 4500.0; // Distance in kilometers
-        bookingModel.start = LocalDateTime.of(2024, 1, 1, 8, 30); // Jan 1, 2024, 8:30 AM
-        bookingModel.end = LocalDateTime.of(2024, 1, 5, 20, 0); // Jan 5, 2024, 8:00 PM
-        bookingModel.bookingStatus = BookingStatus.ENQUIRY;
-        bookingModel.firstDriverId = "D123";
-        bookingModel.secondDriverId = "D456";
-        bookingModel.userId = "U789";
-        bookingModel.lastModifiedAt = Instant.now(); // Current timestamp
-        bookingModel.initialQuote = BigDecimal.valueOf(1000.00); // Example quote in USD
-
-        return bookingModel;
-    }
-
-    private static BookingDataModel buildBookingDataModel() {
-        BookingDataModel bookingData = new BookingDataModel();
-        bookingData.setBookingId("BK123456");
-        bookingData.setName("John Doe");
-        bookingData.setNotes("This is a test booking.");
-        bookingData.setNumberPlate("XYZ 1234");
-        bookingData.setDeparture("City A");
-        bookingData.setArrival("City B");
-        bookingData.setPlannedDistance(150.0);
-        bookingData.setUnitOfMeasurement("km");
-        bookingData.setStart(LocalDateTime.now().plusDays(1));
-        bookingData.setEnd(LocalDateTime.now().plusDays(2));
-        bookingData.setBookingStatusId("STATUS_PENDING");
-        bookingData.setFirstDriverId("DRIVER_001");
-        bookingData.setSecondDriverId("DRIVER_002");
-        bookingData.setOwnerId("U789");
-        bookingData.setLastModifiedAt(Instant.now());
-        bookingData.setInitialQuote(new BigDecimal("250.00"));
-
-        return bookingData;
-    }
-
-    private static UserDataModel buildUserDataModel(String userId) {
-        return new UserDataModel(
-                userId,
-                "firstName",
-                "lastName",
-                "userRole");
     }
 }

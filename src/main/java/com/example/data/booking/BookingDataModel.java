@@ -1,6 +1,6 @@
 package com.example.data.booking;
 
-import com.example.domain.booking.BookingStatus;
+import com.example.domain.booking.models.BookingStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -17,7 +17,7 @@ public class BookingDataModel {
     String unitOfMeasurement;
     LocalDateTime start;
     LocalDateTime end;
-    String bookingStatusId;
+    int bookingStatusId;
     String firstDriverId;
     String secondDriverId;
     String ownerId;
@@ -26,11 +26,11 @@ public class BookingDataModel {
 
     public BookingDataModel() {}
 
-    public String getBookingStatusId() {
+    public int getBookingStatusId() {
         return bookingStatusId;
     }
 
-    public void setBookingStatusId(String bookingStatusId) {
+    public void setBookingStatusId(int bookingStatusId) {
         this.bookingStatusId = bookingStatusId;
     }
 
@@ -165,7 +165,7 @@ public class BookingDataModel {
             Double plannedDistance,
             LocalDateTime start,
             LocalDateTime end,
-            String bookingStatusId,
+            int bookingStatusId,
             String firstDriverId,
             String secondDriverId,
             String ownerId,
@@ -188,15 +188,6 @@ public class BookingDataModel {
         this.ownerId = ownerId;
         this.lastModifiedAt = lastModifiedAt;
         this.initialQuote = initialQuote;
-    }
-
-    public static BookingStatus convertToBookingStatus(String bookingStatusId) {
-        return switch (bookingStatusId) {
-            case "0" -> BookingStatus.ENQUIRY;
-            case "1" -> BookingStatus.CONFIRMED;
-            case "2" -> BookingStatus.REJECTED;
-            default -> null;
-        };
     }
 }
 

@@ -1,5 +1,7 @@
 package com.example.domain.booking;
 
+import com.example.models.booking.BookingInputDto;
+import com.example.models.booking.BookingSearchCriteria;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void createBooking(BookingInputDto bookingInput) {
-
+        addBooking.call(bookingInput);
     }
 
     @Override

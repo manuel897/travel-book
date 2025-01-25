@@ -2,6 +2,8 @@ package com.example.domain.booking;
 
 import com.example.data.booking.BookingDataModel;
 import com.example.data.user.UserDataModel;
+import com.example.models.booking.BookingInputDto;
+import com.example.domain.booking.models.BookingNotFoundException;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
 import com.example.domain.user.UserRole;
@@ -38,7 +40,7 @@ public class DeleteBooking {
 
         // only owner or manager can delete booking
         final boolean isActionAllowed = Objects.equals(existingBooking.getOwnerId(), bookingModel.userId)
-                || UserRole.MANAGER.name().equals(actionUser.getUserRole());
+                || UserRole.MANAGER.name().equals(actionUser.getUserRoleId());
         if(!isActionAllowed) {
             bookingPresenter.presentActionNotAllowed();
             return;

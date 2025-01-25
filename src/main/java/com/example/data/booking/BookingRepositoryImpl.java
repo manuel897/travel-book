@@ -1,7 +1,6 @@
 package com.example.data.booking;
 
 import com.example.domain.booking.BookingRepository;
-import com.example.domain.booking.BookingStatus;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,12 +13,12 @@ import java.util.List;
 public class BookingRepositoryImpl  implements BookingRepository {
     @Override
     public String createBooking(BookingDataModel bookingDataModel) {
-        return "";
+        return "Creation not yet implemented! No Data available";
     }
 
     @Override
     public String updateBooking(BookingDataModel bookingDataModel) {
-        return "";
+        return "Update not yet implemented! No Data available";
     }
 
     @Override
@@ -41,7 +40,7 @@ public class BookingRepositoryImpl  implements BookingRepository {
                 100.5,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                "0",
+                0,
                 "Driver A",
                 "Driver B",
                 "Owner A",

@@ -1,6 +1,6 @@
 package com.example.web;
 
-import com.example.domain.booking.BookingDto;
+import com.example.models.booking.BookingDto;
 import com.example.domain.booking.BookingPresenter;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +10,12 @@ import java.util.List;
 
 @Component
 public class BookingHttpResponseBuilder implements BookingPresenter {
-    private ResponseEntity<List<BookingDto>> response;
+    private ResponseEntity<List<BookingDto>> bookingResponse;
+    private ResponseEntity<String> stringResponse;
 
     @Override
     public void presentBookingCreated(String createdBookingId) {
-        setDummyResponse();
+        stringResponse = createStringResponse("Booking with id " + createdBookingId + " created");
     }
 
     @Override
@@ -39,18 +40,26 @@ public class BookingHttpResponseBuilder implements BookingPresenter {
 
     @Override
     public void presentBookingsFound(List<BookingDto> bookingList) {
-        response = createResponse(bookingList);
+        bookingResponse = createResponse(bookingList);
     }
 
     private ResponseEntity<List<BookingDto>> createResponse(List<BookingDto> dto) {
         return new ResponseEntity<>(dto, HttpStatusCode.valueOf(200));
     }
 
-    private void setDummyResponse() {
-        response = new ResponseEntity<>(List.of() , HttpStatusCode.valueOf(200));
+    private ResponseEntity<String> createStringResponse(String message) {
+        return new ResponseEntity<>(message, HttpStatusCode.valueOf(200));
     }
 
-    public ResponseEntity<List<BookingDto>> getResponse() {
-        return response;
+    private void setDummyResponse() {
+        bookingResponse = new ResponseEntity<>(List.of() , HttpStatusCode.valueOf(200));
+    }
+
+    public ResponseEntity<List<BookingDto>> getBookingResponse() {
+        return bookingResponse;
+    }
+
+    public ResponseEntity<String> getStringResponse() {
+        return stringResponse;
     }
 }

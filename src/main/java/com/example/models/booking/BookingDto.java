@@ -1,4 +1,6 @@
-package com.example.domain.booking;
+package com.example.models.booking;
+
+import com.example.domain.booking.models.BookingStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;

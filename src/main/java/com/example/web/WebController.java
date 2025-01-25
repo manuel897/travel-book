@@ -2,8 +2,8 @@ package com.example.web;
 
 import com.example.controller.BookingController;
 import com.example.controller.BookingControllerImpl;
-import com.example.domain.booking.BookingDto;
-import com.example.domain.booking.BookingInputDto;
+import com.example.models.booking.BookingDto;
+import com.example.models.booking.BookingInputDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,12 +26,12 @@ public class WebController
     @GetMapping("/bookings")
     public ResponseEntity<List<BookingDto>> getBookings() {
         bookingController.onGetAllBooking("mialu23");
-        return bookingReponseBuilder.getResponse();
+        return bookingReponseBuilder.getBookingResponse();
     }
 
     @PostMapping(path = "/booking", consumes = "application/json")
-    public ResponseEntity<List<BookingDto>> processPost(@RequestBody BookingInputDto bookingModel) {
-//        bookingController.on(bookingModel);
-        return bookingReponseBuilder.getResponse();
+    public ResponseEntity<String> newBooking(@RequestBody BookingInputDto bookingModel) {
+        bookingController.onNewBooking(bookingModel);
+        return bookingReponseBuilder.getStringResponse();
     }
 }

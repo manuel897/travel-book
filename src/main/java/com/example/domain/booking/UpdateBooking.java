@@ -2,11 +2,17 @@ package com.example.domain.booking;
 
 import com.example.data.booking.BookingDataModel;
 import com.example.data.user.UserDataModel;
+import com.example.domain.booking.models.BookingStatus;
+import com.example.models.booking.BookingInputDto;
+import com.example.domain.booking.models.BookingNotFoundException;
+import com.example.domain.booking.models.DistanceUnit;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
-import com.example.domain.user.UserRole;
+import com.example.models.booking.BookingStatusConverter;
+import com.example.models.user.UserConverter;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Component
@@ -25,45 +31,51 @@ public class UpdateBooking {
         this.bookingPresenter = bookingPresenter;
     }
 
-    public void call(BookingInputDto bookingModel) {
-        final UserDataModel actionUser = userRepository.findByUserId(bookingModel.userId);
-        if(actionUser == null) {
-            throw new UserNotFoundException("User id " + bookingModel.userId + " not found");
+    public void call(BookingInputDto bookingInput) {
+        final UserDataModel userData = userRepository.findByUserId(bookingInput.userId);
+        if(userData == null) {
+            throw new UserNotFoundException("User id " + bookingInput.userId + " not found");
         }
 
-        final BookingDataModel existingBooking = bookingRepository.findByBookingId(bookingModel.bookingId);
+        final UserConverter userConverter = new UserConverter();
+        final User user = userConverter.toEntity(userData);
+
+        final BookingDataModel existingBooking = bookingRepository.findByBookingId(bookingInput.bookingId);
         if(existingBooking == null) {
-            throw new BookingNotFoundException(bookingModel.bookingId);
+            throw new BookingNotFoundException(bookingInput.bookingId);
         }
 
         // only owner or manager can update booking
-        final boolean isActionAllowed = Objects.equals(existingBooking.getOwnerId(), bookingModel.userId)
-                || UserRole.MANAGER.name().equals(actionUser.getUserRole());
+        final boolean isActionAllowed = Objects.equals(existingBooking.getOwnerId(), bookingInput.userId)
+                || user.isManager();
         if(!isActionAllowed) {
             bookingPresenter.presentActionNotAllowed();
             return;
         }
 
+        final BookingStatusConverter statusConverter = new BookingStatusConverter();
+        final BookingStatus status = statusConverter.toEntity(bookingInput.statusCode);
+
         final BookingDataModel updatedBookingDataModel = new BookingDataModel(
-                bookingModel.bookingId,
-                bookingModel.numberPlate,
-                bookingModel.name,
-                bookingModel.notes,
-                bookingModel.departure,
-                bookingModel.arrival,
+                bookingInput.bookingId,
+                bookingInput.numberPlate,
+                bookingInput.name,
+                bookingInput.notes,
+                bookingInput.departure,
+                bookingInput.arrival,
                 DistanceUnit.KM.name(), // TODO read from config file
-                bookingModel.distance,
-                bookingModel.start,
-                bookingModel.end,
-                bookingModel.bookingStatus.name(),
-                bookingModel.firstDriverId,
-                bookingModel.secondDriverId,
-                bookingModel.userId,
-                bookingModel.lastModifiedAt,
-                bookingModel.initialQuote
-                );
+                bookingInput.distance,
+                bookingInput.start,
+                bookingInput.end,
+                status.getCode(),
+                bookingInput.firstDriverId,
+                bookingInput.secondDriverId,
+                bookingInput.userId,
+                Instant.now(),
+                bookingInput.initialQuote
+        );
 
         bookingRepository.updateBooking((updatedBookingDataModel));
-        bookingPresenter.presentBookingUpdated(bookingModel.bookingId);
+        bookingPresenter.presentBookingUpdated(bookingInput.bookingId);
     }
 }

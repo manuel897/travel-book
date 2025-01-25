@@ -2,9 +2,16 @@ package com.example.domain.booking;
 
 import com.example.data.booking.BookingDataModel;
 import com.example.data.user.UserDataModel;
+import com.example.domain.booking.models.BookingStatus;
+import com.example.models.booking.BookingInputDto;
+import com.example.domain.booking.models.DistanceUnit;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
+import com.example.models.booking.BookingStatusConverter;
+import com.example.models.user.UserConverter;
 import org.springframework.stereotype.Component;
+
+import java.time.Instant;
 
 @Component
 public class AddBooking {
@@ -22,29 +29,39 @@ public class AddBooking {
         this.bookingPresenter = bookingPresenter;
     }
 
-    public void call(BookingInputDto bookingModel) {
-        final UserDataModel existingUser = userRepository.findByUserId(bookingModel.userId);
-        if(existingUser == null) {
-            throw new UserNotFoundException("User id " + bookingModel.userId + " not found");
+    public void call(BookingInputDto bookingInput) {
+        final UserDataModel foundUser = userRepository.findByUserId(bookingInput.userId);
+        if(foundUser == null) {
+            throw new UserNotFoundException("User id " + bookingInput.userId + " not found");
         }
+
+        final UserConverter userConverter = new UserConverter();
+        final User user = userConverter.toEntity(foundUser);
+
+        if(!user.isAllowedToCreateBooking()) {
+            bookingPresenter.presentActionNotAllowed();
+        }
+
+        final BookingStatusConverter statusConverter = new BookingStatusConverter();
+        final BookingStatus status = statusConverter.toEntity(bookingInput.statusCode);
 
         final BookingDataModel newBookingDataModel = new BookingDataModel(
                 null,
-                bookingModel.numberPlate,
-                bookingModel.name,
-                bookingModel.notes,
-                bookingModel.departure,
-                bookingModel.arrival,
+                bookingInput.numberPlate,
+                bookingInput.name,
+                bookingInput.notes,
+                bookingInput.departure,
+                bookingInput.arrival,
                 DistanceUnit.KM.name(), // TODO read from config file
-                bookingModel.distance,
-                bookingModel.start,
-                bookingModel.end,
-                bookingModel.bookingStatus.name(),
-                bookingModel.firstDriverId,
-                bookingModel.secondDriverId,
-                bookingModel.userId,
-                bookingModel.lastModifiedAt,
-                bookingModel.initialQuote
+                bookingInput.distance,
+                bookingInput.start,
+                bookingInput.end,
+                status.getCode(),
+                bookingInput.firstDriverId,
+                bookingInput.secondDriverId,
+                foundUser.getUserId(),
+                Instant.now(),
+                bookingInput.initialQuote
                 );
 
         final String createdBookingId = bookingRepository.createBooking(newBookingDataModel);

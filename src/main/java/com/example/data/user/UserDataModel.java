@@ -4,16 +4,30 @@ public class UserDataModel {
     String userId;
     String firstName;
     String lastName;
-    String userRole;
+    int userRoleId;
 
-    public UserDataModel(String userId, String firstName, String lastName, String userRole) {
+    public UserDataModel(String userId, String firstName, String lastName, int userRoleId) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userRole = userRole;
+        this.userRoleId = userRoleId;
     }
 
-    public String getUserRole() {
-        return userRole;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getUserRoleId() {
+        return userRoleId;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.domain.booking.BookingInputDto;
+import com.example.models.booking.BookingInputDto;
 import com.example.domain.booking.BookingRepository;
 import com.example.domain.booking.BookingService;
 import org.springframework.stereotype.Component;
@@ -20,8 +20,8 @@ public class BookingControllerImpl implements BookingController {
         bookingService.getAllBookings(userId);
     }
 
-    public void createBooking(BookingInputDto bookingInput) {
-        bookingService.createBooking(bookingInput);
+    @Override
+    public void onNewBooking(BookingInputDto booking) {
+        bookingService.createBooking(booking);
     }
-
 }

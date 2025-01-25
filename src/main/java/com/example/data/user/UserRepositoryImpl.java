@@ -9,7 +9,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserDataModel findByUserId(String userId) {
         // TODO remove hardcode response
         if("mialu23".equals(userId)) {
-            return new UserDataModel("mialu23", "Mia", "Lukas", "DRIVER");
+            return new UserDataModel("mialu23", "Mia", "Lukas", 0);
         }
         return null;
     }

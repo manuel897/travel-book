@@ -1,4 +1,4 @@
-package com.example.domain.booking;
+package com.example.domain.booking.models;
 
 public class BookingNotFoundException extends RuntimeException {
     public BookingNotFoundException(String bookingId) {

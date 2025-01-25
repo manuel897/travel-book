@@ -2,8 +2,12 @@ package com.example.domain.booking;
 
 import com.example.data.booking.BookingDataModel;
 import com.example.data.user.UserDataModel;
+import com.example.domain.booking.models.BookingStatus;
+import com.example.models.booking.BookingDto;
+import com.example.models.booking.BookingSearchCriteria;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
+import com.example.models.booking.BookingStatusConverter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,6 +19,7 @@ public class FindBooking {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
     private final BookingPresenter bookingPresenter;
+    private final BookingStatusConverter bookingStatusConverter = new BookingStatusConverter();
 
     FindBooking(
             BookingRepository bookingRepository,
@@ -77,9 +82,9 @@ public class FindBooking {
         if (booking.getEnd() != null) {
             dto.setEnd(booking.getEnd());
         }
-        if (booking.getBookingStatusId() != null) {
-            dto.setBookingStatus(BookingDataModel.convertToBookingStatus(booking.getBookingStatusId()));
-        }
+
+        dto.setBookingStatus(bookingStatusConverter.toEntity(booking.getBookingStatusId()));
+
         if (booking.getFirstDriverId() != null) {
             dto.setFirstDriverId(booking.getFirstDriverId());
         }
