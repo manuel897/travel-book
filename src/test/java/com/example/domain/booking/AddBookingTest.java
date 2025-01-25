@@ -71,8 +71,8 @@ class AddBookingTest {
         assertThrows(UserNotFoundException.class,() -> addBooking.call(buildBookingModel()));
     }
 
-    private static BookingModel buildBookingModel() {
-        BookingModel bookingModel = new BookingModel();
+    private static BookingInputDto buildBookingModel() {
+        BookingInputDto bookingModel = new BookingInputDto();
 
         bookingModel.numberPlate = "ABC123";
         bookingModel.name = "John Doe";

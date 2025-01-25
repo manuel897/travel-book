@@ -80,7 +80,7 @@ class UpdateBookingTest {
     @DisplayName("when the user is the owner of the booking, update is allowed")
     void actionAllowedWhenUserIsOwner() {
         final String sameUser = "JANE";
-        final BookingModel bookingModel = buildBookingModel();
+        final BookingInputDto bookingModel = buildBookingModel();
         final BookingDataModel existingBooking = buildBookingDataModel();
         existingBooking.setOwnerId(sameUser);
         bookingModel.userId = sameUser;
@@ -96,7 +96,7 @@ class UpdateBookingTest {
     @Test
     @DisplayName("when the user is not the owner of the booking, update is not allowed")
     void actionNotAllowedWhenUserNotOwner() {
-        final BookingModel bookingModel = buildBookingModel();
+        final BookingInputDto bookingModel = buildBookingModel();
         final BookingDataModel existingBooking = buildBookingDataModel();
         existingBooking.setOwnerId("USER A");
         bookingModel.userId = "USER B";
@@ -113,7 +113,7 @@ class UpdateBookingTest {
     @Test
     @DisplayName("when the user is not the owner of the booking, update is allowed if the user is a manager")
     void actionAllowedWhenUserNotOwnerButManager() {
-        final BookingModel bookingModel = buildBookingModel();
+        final BookingInputDto bookingModel = buildBookingModel();
         final BookingDataModel existingBooking = buildBookingDataModel();
         final UserDataModel existingUser = new UserDataModel(
                 "USER B",
@@ -132,8 +132,8 @@ class UpdateBookingTest {
         verify(mockBookingPresenter, times(0)).presentActionNotAllowed();
     }
 
-    private static BookingModel buildBookingModel() {
-        BookingModel bookingModel = new BookingModel();
+    private static BookingInputDto buildBookingModel() {
+        BookingInputDto bookingModel = new BookingInputDto();
 
         bookingModel.bookingId = "123";
         bookingModel.numberPlate = "ABC123";
