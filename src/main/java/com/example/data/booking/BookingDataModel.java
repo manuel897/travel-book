@@ -1,12 +1,13 @@
 package com.example.data.booking;
 
-import com.example.domain.booking.models.BookingStatus;
+import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class BookingDataModel {
+    @Id
     String bookingId;
     String name;
     String notes;
