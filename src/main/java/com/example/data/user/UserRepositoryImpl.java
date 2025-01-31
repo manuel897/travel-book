@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserRepositoryImpl implements UserRepository {
     @Override
-    public UserDataModel findByUserId(String userId) {
+    public UserDataModel findByUsername(String username) {
         // TODO remove hardcode response
-        if("mialu23".equals(userId)) {
+        if("mialu23".equals(username)) {
             return new UserDataModel("mialu23", "Mia", "Lukas", 0);
         }
         return null;

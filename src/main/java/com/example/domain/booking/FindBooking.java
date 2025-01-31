@@ -2,7 +2,6 @@ package com.example.domain.booking;
 
 import com.example.data.booking.BookingDataModel;
 import com.example.data.user.UserDataModel;
-import com.example.domain.booking.models.BookingStatus;
 import com.example.models.booking.BookingDto;
 import com.example.models.booking.BookingSearchCriteria;
 import com.example.domain.user.UserNotFoundException;
@@ -32,7 +31,7 @@ public class FindBooking {
     }
 
     public void call(BookingSearchCriteria searchCriteria) {
-        final UserDataModel existingUser = userRepository.findByUserId(searchCriteria.userId);
+        final UserDataModel existingUser = userRepository.findByUsername(searchCriteria.userId);
         if(existingUser == null) {
             throw new UserNotFoundException("User id " + searchCriteria.userId + " not found");
         }

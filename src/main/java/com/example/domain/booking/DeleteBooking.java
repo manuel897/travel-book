@@ -28,7 +28,7 @@ public class DeleteBooking {
     }
 
     public void call(BookingInputDto bookingModel) {
-        final UserDataModel actionUser = userRepository.findByUserId(bookingModel.userId);
+        final UserDataModel actionUser = userRepository.findByUsername(bookingModel.userId);
         if(actionUser == null) {
             throw new UserNotFoundException("User id " + bookingModel.userId + " not found");
         }

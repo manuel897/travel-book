@@ -30,7 +30,7 @@ public class AddBooking {
     }
 
     public void call(BookingInputDto bookingInput) {
-        final UserDataModel foundUser = userRepository.findByUserId(bookingInput.userId);
+        final UserDataModel foundUser = userRepository.findByUsername(bookingInput.userId);
         if(foundUser == null) {
             throw new UserNotFoundException("User id " + bookingInput.userId + " not found");
         }

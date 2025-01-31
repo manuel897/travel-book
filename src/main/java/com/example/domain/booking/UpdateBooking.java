@@ -32,7 +32,7 @@ public class UpdateBooking {
     }
 
     public void call(BookingInputDto bookingInput) {
-        final UserDataModel userData = userRepository.findByUserId(bookingInput.userId);
+        final UserDataModel userData = userRepository.findByUsername(bookingInput.userId);
         if(userData == null) {
             throw new UserNotFoundException("User id " + bookingInput.userId + " not found");
         }
