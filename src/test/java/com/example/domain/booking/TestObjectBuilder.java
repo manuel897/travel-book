@@ -16,6 +16,7 @@ public class TestObjectBuilder {
     public static UserDataModel buildDriverUser(String userId) {
         return new UserDataModel(
                 userId,
+                "hash",
                 "firstName",
                 "lastName",
                 DRIVER_ROLE_ID);
@@ -24,6 +25,7 @@ public class TestObjectBuilder {
     public static UserDataModel buildManagerUser(String userId) {
         return new UserDataModel(
                 userId,
+                "hash",
                 "firstName",
                 "lastName",
                 MANAGER_ROLE_ID);
@@ -34,6 +36,7 @@ public class TestObjectBuilder {
     ) {
         return new UserDataModel(
                 userId,
+                "hash",
                 "firstName",
                 "lastName",
                 GUEST_ROLE_ID);

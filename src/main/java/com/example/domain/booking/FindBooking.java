@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FindBooking {
@@ -31,8 +32,8 @@ public class FindBooking {
     }
 
     public void call(BookingSearchCriteria searchCriteria) {
-        final UserDataModel existingUser = userRepository.findByUsername(searchCriteria.userId);
-        if(existingUser == null) {
+        final Optional<UserDataModel> existingUser = userRepository.findByUsername(searchCriteria.userId);
+        if(existingUser.isEmpty()) {
             throw new UserNotFoundException("User id " + searchCriteria.userId + " not found");
         }
 

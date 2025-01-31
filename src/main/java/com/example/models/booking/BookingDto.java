@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class BookingDto {
     String numberPlate;
-     String name;
+    String name;
     String notes;
     String departure;
     String arrival;

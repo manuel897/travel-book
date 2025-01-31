@@ -1,22 +1,39 @@
 package com.example.domain.user;
 
 import com.example.data.user.UserDataModel;
+import com.example.models.user.UserInputDto;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class CreateUser {
-    private UserRepository userRepository;
-    private UserPresenter userPresenter;
+    private final UserRepository userRepository;
+    private final UserPresenter userPresenter;
 
-    void call(UserDataModel user) {
-        final UserDataModel existingUser = userRepository.findByUsername(user.getUserId());
+    CreateUser(UserRepository userRepository, UserPresenter userPresenter) {
+        this.userRepository = userRepository;
+        this.userPresenter = userPresenter;
+    }
 
-        if(existingUser != null) {
-            userPresenter.presentUserAlreadyExists(user.getUserId());
+    void call(UserInputDto userInput) {
+        final Optional<UserDataModel> existingUser = userRepository.findByUsername(userInput.getUsername());
+
+        if(existingUser.isPresent()) {
+            userPresenter.presentUserAlreadyExists(userInput.getUsername());
+            return;
         }
 
+        final UserDataModel user = new UserDataModel(
+                userInput.getUsername(),
+                userInput.getPassword(), // TODO save hash
+                userInput.getFirstName(),
+                userInput.getLastName(),
+                0 // TODO decide logic for driver
+        );
+
         userRepository.createUser(user);
-        userPresenter.presentUserCreated(user.getUserId());
+        userPresenter.presentUserCreated(user.getUsername());
     }
 
 }

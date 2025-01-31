@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -46,7 +48,7 @@ class AddBookingTest {
     @Test
     @DisplayName("when user cannot be found, booking cannot be created and a exception is thrown")
     void userNotFound() {
-        when(mockUserRepository.findByUserId(anyString())).thenReturn(null);
+        when(mockUserRepository.findByUsername(anyString())).thenReturn(null);
 
         assertThrows(UserNotFoundException.class,() -> addBooking.call(TestObjectBuilder.buildNewBookingInput(DUMMY_USER_ID)));
     }
@@ -54,7 +56,7 @@ class AddBookingTest {
     @Test
     @DisplayName("when user has guest role, creating booking is not allowed")
     void userIsGuest() {
-        when(mockUserRepository.findByUserId(anyString())).thenReturn(TestObjectBuilder.buildGuestUser(DUMMY_USER_ID));
+        when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.of(TestObjectBuilder.buildGuestUser(DUMMY_USER_ID)));
 
         addBooking.call(TestObjectBuilder.buildNewBookingInput(DUMMY_USER_ID));
 
@@ -68,7 +70,7 @@ class AddBookingTest {
     }
 
     private void setupMocks() {
-        when(mockUserRepository.findByUserId(anyString())).thenReturn(TestObjectBuilder.buildDriverUser(DUMMY_USER_ID));
+        when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.of(TestObjectBuilder.buildDriverUser(DUMMY_USER_ID)));
         when(mockBookingRepository.createBooking(any(BookingDataModel.class))).thenReturn("");
         doNothing().when(mockBookingPresenter).presentBookingCreated(anyString());
     }

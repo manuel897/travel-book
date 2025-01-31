@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 public class UpdateBooking {
@@ -32,13 +33,13 @@ public class UpdateBooking {
     }
 
     public void call(BookingInputDto bookingInput) {
-        final UserDataModel userData = userRepository.findByUsername(bookingInput.userId);
-        if(userData == null) {
+        final Optional<UserDataModel> userData = userRepository.findByUsername(bookingInput.userId);
+        if(userData.isEmpty()) {
             throw new UserNotFoundException("User id " + bookingInput.userId + " not found");
         }
 
         final UserConverter userConverter = new UserConverter();
-        final User user = userConverter.toEntity(userData);
+        final User user = userConverter.toEntity(userData.get());
 
         final BookingDataModel existingBooking = bookingRepository.findByBookingId(bookingInput.bookingId);
         if(existingBooking == null) {
