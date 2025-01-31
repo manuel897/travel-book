@@ -6,10 +6,8 @@ import com.example.models.booking.BookingInputDto;
 import com.example.domain.booking.models.BookingNotFoundException;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
-import com.example.models.user.UserConverter;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -34,23 +32,9 @@ public class DeleteBooking {
             throw new UserNotFoundException("User id " + bookingModel.userId + " not found");
         }
 
-        final BookingDataModel existingBooking = bookingRepository.findByBookingId(bookingModel.bookingId);
-        if(existingBooking == null) {
-            throw new BookingNotFoundException(bookingModel.bookingId);
-        }
+        final Optional<BookingDataModel> existingBooking = bookingRepository.findByBookingId(bookingModel.bookingId);
+        throw new BookingNotFoundException(bookingModel.bookingId.toString());
 
         // only owner or manager can delete booking
-        UserConverter userConverter = new UserConverter();
-        final User user = userConverter.toEntity(actionUser.get());
-
-        final boolean isActionAllowed = Objects.equals(existingBooking.getOwnerId(), bookingModel.userId)
-                || user.isManager();
-        if(!isActionAllowed) {
-            bookingPresenter.presentActionNotAllowed();
-            return;
-        }
-
-        bookingRepository.deleteBooking((existingBooking.getBookingId()));
-        bookingPresenter.presentBookingDeleted(bookingModel.bookingId);
     }
 }

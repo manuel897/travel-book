@@ -47,7 +47,6 @@ public class AddBooking {
         final BookingStatus status = statusConverter.toEntity(bookingInput.statusCode);
 
         final BookingDataModel newBookingDataModel = new BookingDataModel(
-                null,
                 bookingInput.numberPlate,
                 bookingInput.name,
                 bookingInput.notes,
@@ -63,9 +62,9 @@ public class AddBooking {
                 foundUser.get().getUsername(),
                 Instant.now(),
                 bookingInput.initialQuote
-                );
+        );
 
-        final String createdBookingId = bookingRepository.createBooking(newBookingDataModel);
-        bookingPresenter.presentBookingCreated(createdBookingId);
+        bookingRepository.createBooking(newBookingDataModel);
+        bookingPresenter.presentBookingCreated(bookingInput.name);
     }
 }

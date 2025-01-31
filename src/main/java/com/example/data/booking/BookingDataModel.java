@@ -1,14 +1,16 @@
 package com.example.data.booking;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
+@Table("booking")
 public class BookingDataModel {
     @Id
-    String bookingId;
+    Integer bookingId;
     String name;
     String notes;
     String numberPlate;
@@ -16,12 +18,12 @@ public class BookingDataModel {
     String arrival;
     Double plannedDistance;
     String unitOfMeasurement;
-    LocalDateTime start;
-    LocalDateTime end;
+    LocalDateTime startTime;
+    LocalDateTime finishTime;
     int bookingStatusId;
-    String firstDriverId;
-    String secondDriverId;
-    String ownerId;
+    String firstDriverUsername;
+    String secondDriverUsername;
+    String ownerUsername;
     Instant lastModifiedAt;
     BigDecimal initialQuote;
 
@@ -35,12 +37,8 @@ public class BookingDataModel {
         this.bookingStatusId = bookingStatusId;
     }
 
-    public String getBookingId() {
+    public Integer getBookingId() {
         return bookingId;
-    }
-
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
     }
 
     public String getName() {
@@ -99,44 +97,44 @@ public class BookingDataModel {
         this.unitOfMeasurement = unitOfMeasurement;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStart(LocalDateTime start) {
-        this.start = start;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public LocalDateTime getEnd() {
-        return end;
+    public LocalDateTime getFinishTime() {
+        return finishTime;
     }
 
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
+    public void setFinishTime(LocalDateTime finishTime) {
+        this.finishTime = finishTime;
     }
 
-    public String getFirstDriverId() {
-        return firstDriverId;
+    public String getFirstDriverUsername() {
+        return firstDriverUsername;
     }
 
-    public void setFirstDriverId(String firstDriverId) {
-        this.firstDriverId = firstDriverId;
+    public void setFirstDriverUsername(String firstDriverUsername) {
+        this.firstDriverUsername = firstDriverUsername;
     }
 
-    public String getSecondDriverId() {
-        return secondDriverId;
+    public String getSecondDriverUsername() {
+        return secondDriverUsername;
     }
 
-    public void setSecondDriverId(String secondDriverId) {
-        this.secondDriverId = secondDriverId;
+    public void setSecondDriverUsername(String secondDriverUsername) {
+        this.secondDriverUsername = secondDriverUsername;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getOwnerUsername() {
+        return ownerUsername;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
     }
 
     public Instant getLastModifiedAt() {
@@ -155,8 +153,11 @@ public class BookingDataModel {
         this.initialQuote = initialQuote;
     }
 
+    public void setBookingId(Integer bookingId) {
+        this.bookingId = bookingId;
+    }
+
     public BookingDataModel(
-            String bookingId,
             String numberPlate,
             String name,
             String notes,
@@ -164,16 +165,15 @@ public class BookingDataModel {
             String arrival,
             String unitOfMeasurement,
             Double plannedDistance,
-            LocalDateTime start,
-            LocalDateTime end,
+            LocalDateTime startTime,
+            LocalDateTime finishTime,
             int bookingStatusId,
-            String firstDriverId,
-            String secondDriverId,
-            String ownerId,
+            String firstDriverUsername,
+            String secondDriverUsername,
+            String ownerUsername,
             Instant lastModifiedAt,
             BigDecimal initialQuote
     ) {
-        this.bookingId = bookingId;
         this.numberPlate = numberPlate;
         this.name = name;
         this.notes = notes;
@@ -181,12 +181,12 @@ public class BookingDataModel {
         this.arrival = arrival;
         this.unitOfMeasurement = unitOfMeasurement;
         this.plannedDistance = plannedDistance;
-        this.start = start;
-        this.end = end;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
         this.bookingStatusId = bookingStatusId;
-        this.firstDriverId = firstDriverId;
-        this.secondDriverId = secondDriverId;
-        this.ownerId = ownerId;
+        this.firstDriverUsername = firstDriverUsername;
+        this.secondDriverUsername = secondDriverUsername;
+        this.ownerUsername = ownerUsername;
         this.lastModifiedAt = lastModifiedAt;
         this.initialQuote = initialQuote;
     }

@@ -48,8 +48,13 @@ public class FindBooking {
             return;
         }
 
-        final BookingDataModel booking = bookingRepository.findByBookingId(searchCriteria.bookingId);
-        final BookingDto dto = createDtoFromFoundBooking(booking);
+        final Optional<BookingDataModel> booking = bookingRepository.findByBookingId(searchCriteria.bookingId);
+        if(booking.isEmpty()) {
+            bookingPresenter.presentBookingsFound(List.of());
+            return;
+        }
+
+        final BookingDto dto = createDtoFromFoundBooking(booking.get());
 
         final List<BookingDto> result = Collections.singletonList(dto);
         bookingPresenter.presentBookingsFound(result);
@@ -76,23 +81,23 @@ public class FindBooking {
         if (booking.getPlannedDistance() != null) {
             dto.setDistance(booking.getPlannedDistance());
         }
-        if (booking.getStart() != null) {
-            dto.setStart(booking.getStart());
+        if (booking.getStartTime() != null) {
+            dto.setStart(booking.getStartTime());
         }
-        if (booking.getEnd() != null) {
-            dto.setEnd(booking.getEnd());
+        if (booking.getFinishTime() != null) {
+            dto.setEnd(booking.getFinishTime());
         }
 
         dto.setBookingStatus(bookingStatusConverter.toEntity(booking.getBookingStatusId()));
 
-        if (booking.getFirstDriverId() != null) {
-            dto.setFirstDriverId(booking.getFirstDriverId());
+        if (booking.getFirstDriverUsername() != null) {
+            dto.setFirstDriverId(booking.getFirstDriverUsername());
         }
-        if (booking.getSecondDriverId() != null) {
-            dto.setSecondDriverId(booking.getSecondDriverId());
+        if (booking.getSecondDriverUsername() != null) {
+            dto.setSecondDriverId(booking.getSecondDriverUsername());
         }
-        if (booking.getOwnerId() != null) {
-            dto.setUserId(booking.getOwnerId());
+        if (booking.getOwnerUsername() != null) {
+            dto.setUserId(booking.getOwnerUsername());
         }
         if (booking.getLastModifiedAt() != null) {
             dto.setLastModifiedAt(booking.getLastModifiedAt());
