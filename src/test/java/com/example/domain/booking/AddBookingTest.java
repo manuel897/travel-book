@@ -48,7 +48,7 @@ class AddBookingTest {
     @Test
     @DisplayName("when user cannot be found, booking cannot be created and a exception is thrown")
     void userNotFound() {
-        when(mockUserRepository.findByUsername(anyString())).thenReturn(null);
+        when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class,() -> addBooking.call(TestObjectBuilder.buildNewBookingInput(DUMMY_USER_ID)));
     }

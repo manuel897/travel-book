@@ -75,7 +75,7 @@ class UpdateBookingTest {
     @Test
     @DisplayName("when user cannot be found, booking cannot be updated and a exception is thrown")
     void userNotFound() {
-        when(mockUserRepository.findByUsername(anyString())).thenReturn(null);
+        when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class,() -> updateBooking.call(TestObjectBuilder.buildNewBookingInput(DUMMY_USER_ID)));
     }
@@ -83,7 +83,7 @@ class UpdateBookingTest {
     @Test
     @DisplayName("when the booking cannot be found, booking cannot be updated")
     void bookingNotFound() {
-        when(mockBookingRepository.findByBookingId(any())).thenReturn(null);
+        when(mockBookingRepository.findByBookingId(any())).thenReturn(Optional.empty());
 
         assertThrows(BookingNotFoundException.class,() -> updateBooking.call(TestObjectBuilder.buildNewBookingInput(DUMMY_USER_ID)));
     }
