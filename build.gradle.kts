@@ -31,8 +31,21 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation("org.postgresql", "postgresql", "42.7.4")
+
+//    implementation(platform("org.apache.logging.log4j:log4j-bom:2.24.3"))
+//    implementation("org.apache.logging.log4j:log4j-api")
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2
+    implementation("org.springframework.boot:spring-boot-starter-log4j2:3.4.2")
+
 }
 
 tasks.test {
     useJUnitPlatform()
+}
+
+configurations {
+    all {
+        exclude("org.springframework.boot", "spring-boot-starter-logging")
+    }
 }

@@ -44,3 +44,4 @@ bin/
 ### configuration files
 /config/
 /sql/
+log4j2.xml
