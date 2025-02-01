@@ -2,7 +2,7 @@ package com.example.data;
 
 import com.example.AppConfig;
 import com.example.RestServiceApplication;
-import com.example.data.booking.BookingCrudRepository;
+import com.example.data.booking.BookingDataSource;
 import com.example.data.booking.BookingDataModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ContextConfiguration(classes = AppConfig.class)
 public class BookingCrudRepoTest {
     @Autowired
-    BookingCrudRepository bookingCrudRepo;
+    BookingDataSource bookingCrudRepo;
 
     @Test
     void createSimpleBooking() {

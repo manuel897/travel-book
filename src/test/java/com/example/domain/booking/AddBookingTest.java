@@ -71,7 +71,7 @@ class AddBookingTest {
 
     private void setupMocks() {
         when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.of(TestObjectBuilder.buildDriverUser(DUMMY_USER_ID)));
-        when(mockBookingRepository.createBooking(any(BookingDataModel.class))).thenReturn("");
+//        when(mockBookingRepository.createBooking(any(BookingDataModel.class))).thenReturn(null);
         doNothing().when(mockBookingPresenter).presentBookingCreated(anyString());
     }
 

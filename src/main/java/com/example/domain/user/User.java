@@ -1,6 +1,4 @@
-package com.example.domain.booking;
-
-import com.example.domain.user.UserRole;
+package com.example.domain.user;
 
 public class User {
     String firstName;
@@ -13,11 +11,11 @@ public class User {
         this.role = role;
     }
 
-    boolean isAllowedToCreateBooking() {
+    public boolean isAllowedToCreateBooking() {
         return !UserRole.GUEST.equals(role);
     }
 
-    boolean isManager() {
+    public boolean isManager() {
         return UserRole.MANAGER.equals(role);
     }
 }

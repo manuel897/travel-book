@@ -3,6 +3,7 @@ package com.example.domain.booking;
 import com.example.data.booking.BookingDataModel;
 import com.example.data.user.UserDataModel;
 import com.example.domain.booking.models.BookingStatus;
+import com.example.domain.user.User;
 import com.example.models.booking.BookingInputDto;
 import com.example.domain.booking.models.DistanceUnit;
 import com.example.domain.user.UserNotFoundException;

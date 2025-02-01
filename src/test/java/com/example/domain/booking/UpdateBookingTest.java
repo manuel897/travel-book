@@ -20,7 +20,7 @@ import static org.mockito.internal.util.MockUtil.resetMock;
 
 class UpdateBookingTest {
     private static final String DUMMY_USER_ID = "userId";
-    private static final String DUMMY_BOOKING_ID = "bookingId";
+    private static final Integer DUMMY_BOOKING_ID = 101;
 
     BookingRepository mockBookingRepository;
     UserRepository mockUserRepository;
@@ -41,7 +41,7 @@ class UpdateBookingTest {
 
     private void setupMocks() {
         when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.of(TestObjectBuilder.buildDriverUser(DUMMY_USER_ID)));
-        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(TestObjectBuilder.buildBookingDataModel());
+        when(mockBookingRepository.findByBookingId(any())).thenReturn(Optional.of(TestObjectBuilder.buildBookingDataModel()));
         when(mockBookingRepository.updateBooking(any(BookingDataModel.class))).thenReturn("");
         doNothing().when(mockBookingPresenter).presentBookingCreated(anyString());
     }
@@ -63,8 +63,8 @@ class UpdateBookingTest {
     @DisplayName("when user and booking is found, booking is updated and success is presented")
     void userFound() {
         final BookingDataModel existingBooking = TestObjectBuilder.buildBookingDataModel();
-        existingBooking.setOwnerId(DUMMY_USER_ID);
-        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(existingBooking);
+        existingBooking.setOwnerUsername(DUMMY_USER_ID);
+        when(mockBookingRepository.findByBookingId(any())).thenReturn(Optional.of(existingBooking));
 
         updateBooking.call(TestObjectBuilder.buildExistingBookingInput(DUMMY_BOOKING_ID ,DUMMY_USER_ID));
 
@@ -83,7 +83,7 @@ class UpdateBookingTest {
     @Test
     @DisplayName("when the booking cannot be found, booking cannot be updated")
     void bookingNotFound() {
-        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(null);
+        when(mockBookingRepository.findByBookingId(any())).thenReturn(null);
 
         assertThrows(BookingNotFoundException.class,() -> updateBooking.call(TestObjectBuilder.buildNewBookingInput(DUMMY_USER_ID)));
     }
@@ -93,9 +93,9 @@ class UpdateBookingTest {
     void actionAllowedWhenUserIsOwner() {
         final String sameUser = "JANE";
         final BookingDataModel existingBooking = TestObjectBuilder.buildBookingDataModel();
-        existingBooking.setOwnerId(sameUser);
+        existingBooking.setOwnerUsername(sameUser);
         when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.of(TestObjectBuilder.buildDriverUser(sameUser)));
-        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(existingBooking);
+        when(mockBookingRepository.findByBookingId(any())).thenReturn(Optional.of(existingBooking));
 
         updateBooking.call(TestObjectBuilder.buildExistingBookingInput(DUMMY_BOOKING_ID, sameUser));
 
@@ -107,11 +107,11 @@ class UpdateBookingTest {
     void actionNotAllowedWhenUserNotOwner() {
         final BookingInputDto bookingModel = TestObjectBuilder.buildExistingBookingInput(DUMMY_BOOKING_ID, DUMMY_USER_ID);
         final BookingDataModel existingBooking = TestObjectBuilder.buildBookingDataModel();
-        existingBooking.setOwnerId("USER A");
+        existingBooking.setOwnerUsername("USER A");
         bookingModel.userId = "USER B";
 
         when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.of(TestObjectBuilder.buildDriverUser("USER B")));
-        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(existingBooking);
+        when(mockBookingRepository.findByBookingId(any())).thenReturn(Optional.of(existingBooking));
 
         updateBooking.call(bookingModel);
 
@@ -126,10 +126,10 @@ class UpdateBookingTest {
         final BookingInputDto bookingInput = TestObjectBuilder.buildExistingBookingInput(DUMMY_BOOKING_ID, managerUserId);
         final BookingDataModel existingBooking = TestObjectBuilder.buildBookingDataModel();
 
-        existingBooking.setOwnerId("USER A");
+        existingBooking.setOwnerUsername("USER A");
 
         when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.of(TestObjectBuilder.buildManagerUser(managerUserId)));
-        when(mockBookingRepository.findByBookingId(anyString())).thenReturn(existingBooking);
+        when(mockBookingRepository.findByBookingId(any())).thenReturn(Optional.of(existingBooking));
 
         updateBooking.call(bookingInput);
 

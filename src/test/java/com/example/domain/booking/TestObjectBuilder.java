@@ -53,7 +53,7 @@ public class TestObjectBuilder {
         dto.distance = 4500.0; // Distance in kilometers
         dto.start = LocalDateTime.of(2024, 1, 1, 8, 30); // Jan 1, 2024, 8:30 AM
         dto.end = LocalDateTime.of(2024, 1, 5, 20, 0); // Jan 5, 2024, 8:00 PM
-        dto.bookingId = "";
+        dto.bookingId = 0;
         dto.firstDriverId = "D123";
         dto.secondDriverId = "D456";
         dto.userId = userId;
@@ -62,7 +62,7 @@ public class TestObjectBuilder {
         return dto;
     }
 
-    static BookingInputDto buildExistingBookingInput(String bookingId, String userId) {
+    static BookingInputDto buildExistingBookingInput(Integer bookingId, String userId) {
         BookingInputDto dto = new BookingInputDto();
 
         dto.bookingId = bookingId;
@@ -83,7 +83,7 @@ public class TestObjectBuilder {
         return dto;
     }
 
-    static BookingInputDto buildExistingBookingInputWithOwner(String bookingId, String userId, String ownerId) {
+    static BookingInputDto buildExistingBookingInputWithOwner(Integer bookingId, String userId, String ownerId) {
         BookingInputDto dto = new BookingInputDto();
 
         dto.bookingId = bookingId;
@@ -106,7 +106,7 @@ public class TestObjectBuilder {
 
     static BookingDataModel buildBookingDataModel() {
         BookingDataModel bookingData = new BookingDataModel();
-        bookingData.setBookingId("BK123456");
+        bookingData.setBookingId(123456);
         bookingData.setName("John Doe");
         bookingData.setNotes("This is a test booking.");
         bookingData.setNumberPlate("XYZ 1234");
@@ -114,12 +114,12 @@ public class TestObjectBuilder {
         bookingData.setArrival("City B");
         bookingData.setPlannedDistance(150.0);
         bookingData.setUnitOfMeasurement("km");
-        bookingData.setStart(LocalDateTime.now().plusDays(1));
-        bookingData.setEnd(LocalDateTime.now().plusDays(2));
+        bookingData.setStartTime(LocalDateTime.now().plusDays(1));
+        bookingData.setFinishTime(LocalDateTime.now().plusDays(2));
         bookingData.setBookingStatusId(1);
-        bookingData.setFirstDriverId("DRIVER_001");
-        bookingData.setSecondDriverId("DRIVER_002");
-        bookingData.setOwnerId("U789");
+        bookingData.setFirstDriverUsername("DRIVER_001");
+        bookingData.setSecondDriverUsername("DRIVER_002");
+        bookingData.setOwnerUsername("U789");
         bookingData.setLastModifiedAt(Instant.now());
         bookingData.setInitialQuote(new BigDecimal("250.00"));
 

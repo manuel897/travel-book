@@ -1,13 +1,8 @@
 package com.example.data.booking;
 
 import com.example.domain.booking.BookingRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +39,3 @@ class BookingRepositoryImpl  implements BookingRepository {
         bookingDataSource.deleteById(bookingId);
     }
 }
-
-interface BookingDataSource extends CrudRepository<BookingDataModel, Integer> {}

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class UserControllerImpl implements UserController {
     private final UserService userService;
 
-    UserControllerImpl(UserService userService) {
+    public UserControllerImpl(UserService userService) {
         this.userService = userService;
     }
 

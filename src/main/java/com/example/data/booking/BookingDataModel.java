@@ -89,10 +89,6 @@ public class BookingDataModel {
         this.plannedDistance = plannedDistance;
     }
 
-    public String getUnitOfMeasurement() {
-        return unitOfMeasurement;
-    }
-
     public void setUnitOfMeasurement(String unitOfMeasurement) {
         this.unitOfMeasurement = unitOfMeasurement;
     }

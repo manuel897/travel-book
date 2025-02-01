@@ -1,7 +1,7 @@
 package com.example.models.user;
 
 import com.example.data.user.UserDataModel;
-import com.example.domain.booking.User;
+import com.example.domain.user.User;
 import com.example.domain.user.UserRole;
 import com.example.models.EntityConverter;
 
