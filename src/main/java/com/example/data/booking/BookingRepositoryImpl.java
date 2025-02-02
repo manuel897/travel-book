@@ -32,11 +32,15 @@ class BookingRepositoryImpl  implements BookingRepository {
 
     @Override
     public Optional<BookingDataModel> findByBookingId(Integer bookingId) {
+        LOGGER.info("Find booking by id '{}'", bookingId);
+
         return bookingDataSource.findById(bookingId);
     }
 
     @Override
     public List<BookingDataModel> findAll() {
+        LOGGER.info("Find all bookings");
+
         return (List<BookingDataModel>) bookingDataSource.findAll();
     }
 

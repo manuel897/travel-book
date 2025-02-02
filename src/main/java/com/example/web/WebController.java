@@ -6,6 +6,8 @@ import com.example.controller.UserController;
 import com.example.models.booking.BookingDto;
 import com.example.models.booking.BookingInputDto;
 import com.example.models.user.UserInputDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 public class WebController
 {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private final BookingController bookingController;
     private final BookingHttpResponseBuilder bookingResponseBuilder;
     private final UserController userController;
@@ -31,18 +35,24 @@ public class WebController
 
     @GetMapping("/bookings")
     public ResponseEntity<List<BookingDto>> getBookings() {
-        bookingController.onGetAllBooking("mialu23");
+        LOGGER.info("Received request to get all booking");
+
+        bookingController.onGetAllBooking();
         return bookingResponseBuilder.getBookingResponse();
     }
 
     @PostMapping(path = "/booking", consumes = "application/json")
-    public ResponseEntity<String> newBooking(@RequestBody BookingInputDto bookingModel) {
-        bookingController.onNewBooking(bookingModel);
+    public ResponseEntity<String> newBooking(@RequestBody BookingInputDto booking) {
+        LOGGER.info("Received request to create booking `{}` by `{}` ", booking.name, booking.userId);
+
+        bookingController.onNewBooking(booking);
         return bookingResponseBuilder.getStringResponse();
     }
 
     @PostMapping(path = "/user", consumes = "application/json")
     public ResponseEntity<String> newUser(@RequestBody UserInputDto userInput) {
+        LOGGER.info("Received request to create user with username `{}`", userInput.getUsername());
+
         userController.onCreateUser(userInput);
         return userReponseBuilder.getStringResponse();
     }

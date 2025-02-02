@@ -24,9 +24,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void getAllBookings(String userId) {
+    public void getAllBookings() {
         final BookingSearchCriteria sc = new BookingSearchCriteria();
-        sc.setUserId(userId);
+        findBooking.call(sc);
+    }
+
+    @Override
+    public void getBookingsOfUser(String username) {
+        final BookingSearchCriteria sc = new BookingSearchCriteria();
+        sc.setUserId(username);
         findBooking.call(sc);
     }
 

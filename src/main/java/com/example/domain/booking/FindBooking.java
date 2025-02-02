@@ -9,10 +9,7 @@ import com.example.domain.user.UserRepository;
 import com.example.models.booking.BookingStatusConverter;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class FindBooking {
@@ -24,24 +21,33 @@ public class FindBooking {
     FindBooking(
             BookingRepository bookingRepository,
             UserRepository userRepository,
-            BookingPresenter bookingPresenter, UserRepository userRepository1, BookingRepository bookingRepository1, BookingPresenter bookingPresenter1
+            BookingPresenter bookingPresenter
     ) {
-        this.userRepository = userRepository1;
-        this.bookingRepository = bookingRepository1;
-        this.bookingPresenter = bookingPresenter1;
+        this.userRepository = userRepository;
+        this.bookingRepository = bookingRepository;
+        this.bookingPresenter = bookingPresenter;
     }
 
     public void call(BookingSearchCriteria searchCriteria) {
-        final Optional<UserDataModel> existingUser = userRepository.findByUsername(searchCriteria.userId);
-        if(existingUser.isEmpty()) {
-            throw new UserNotFoundException("User id " + searchCriteria.userId + " not found");
-        }
-
         if(searchCriteria.bookingId == null) {
             final List<BookingDataModel> bookingList = bookingRepository.findAll();
             final List<BookingDto> result = new ArrayList<>();
             for(BookingDataModel b : bookingList) {
                 result.add(createDtoFromFoundBooking(b));
+            }
+
+            if(searchCriteria.userId != null) {
+                final Optional<UserDataModel> existingUser = userRepository.findByUsername(searchCriteria.userId);
+                if(existingUser.isEmpty()) {
+                    throw new UserNotFoundException("User id " + searchCriteria.userId + " not found");
+                }
+
+                bookingPresenter.presentBookingsFound(result
+                        .stream()
+                        .filter(bookingDto -> searchCriteria.userId.equals(bookingDto.getUserId()))
+                        .toList()
+                );
+                return;
             }
 
             bookingPresenter.presentBookingsFound(result);

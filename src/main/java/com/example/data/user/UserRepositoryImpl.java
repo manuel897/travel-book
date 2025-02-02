@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<UserDataModel> findByUsername(String username) {
-        LOGGER.trace("Find user with username `{}`", username);
+        LOGGER.info("Find user with username `{}`", username);
 
         return userDataSource.findByUsername(username);
     }

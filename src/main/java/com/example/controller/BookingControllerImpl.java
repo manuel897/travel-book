@@ -13,8 +13,13 @@ public class BookingControllerImpl implements BookingController {
     }
 
     @Override
-    public void onGetAllBooking(String userId) {
-        bookingService.getAllBookings(userId);
+    public void onGetAllBooking() {
+        bookingService.getAllBookings();
+    }
+
+    @Override
+    public void onGetBookingByUsername(String username) {
+        bookingService.getBookingsOfUser(username);
     }
 
     @Override
