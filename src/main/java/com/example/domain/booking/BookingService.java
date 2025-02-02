@@ -10,7 +10,9 @@ public interface BookingService {
 
     void findBooking(BookingSearchCriteria searchCriteria);
 
-    void getAllBookings(String userId);
+    void getAllBookings();
+
+    void getBookingsOfUser(String username);
 
     void removeBooking(BookingInputDto bookingInput);
 }

@@ -3,11 +3,12 @@ package com.example.domain.booking;
 import com.example.data.booking.BookingDataModel;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingRepository {
-    String createBooking(BookingDataModel bookingDataModel);
+    void createBooking(BookingDataModel booking);
     String updateBooking(BookingDataModel bookingDataModel);
-    BookingDataModel findByBookingId(String bookingId);
+    Optional<BookingDataModel> findByBookingId(Integer bookingId);
     List<BookingDataModel> findAll();
-    BookingDataModel deleteBooking(String bookingId);
+    void deleteBooking(Integer bookingId);
 }

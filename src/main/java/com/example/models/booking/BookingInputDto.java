@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class BookingInputDto {
-    public String bookingId;
+    public Integer bookingId;
     public String numberPlate;
     public String name;
     public String notes;

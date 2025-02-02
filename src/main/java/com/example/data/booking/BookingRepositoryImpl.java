@@ -1,58 +1,51 @@
 package com.example.data.booking;
 
 import com.example.domain.booking.BookingRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class BookingRepositoryImpl  implements BookingRepository {
-    @Override
-    public String createBooking(BookingDataModel bookingDataModel) {
-        return "Creation not yet implemented! No Data available";
+class BookingRepositoryImpl  implements BookingRepository {
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    final private BookingDataSource bookingDataSource;
+
+    public BookingRepositoryImpl(BookingDataSource bookingDataSource) {
+        this.bookingDataSource = bookingDataSource;
     }
 
     @Override
-    public String updateBooking(BookingDataModel bookingDataModel) {
+    public void createBooking(BookingDataModel booking) {
+        LOGGER.info("Creating booking with name `{}` by {}", booking.name, booking.ownerUsername);
+        bookingDataSource.save(booking);
+    }
+
+    @Override
+    public String updateBooking(BookingDataModel booking) {
+        LOGGER.info("Update booking with name `{}` by {}", booking.name, booking.ownerUsername);
         return "Update not yet implemented! No Data available";
     }
 
     @Override
-    public BookingDataModel findByBookingId(String bookingId) {
-        return null;
+    public Optional<BookingDataModel> findByBookingId(Integer bookingId) {
+        LOGGER.info("Find booking by id '{}'", bookingId);
+
+        return bookingDataSource.findById(bookingId);
     }
 
     @Override
     public List<BookingDataModel> findAll() {
-        // TODO remove hardcoded values
-        final BookingDataModel sampleBooking = new BookingDataModel(
-                "booking_id",
-                "AB 12 3456",
-                "Chruch Tour",
-                "A trip from a local church",
-                "Location Departure",
-                "Location Arrival",
-                "KM",
-                100.5,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                0,
-                "Driver A",
-                "Driver B",
-                "Owner A",
-                Instant.now(),
-                BigDecimal.valueOf(5000)
-        );
+        LOGGER.info("Find all bookings");
 
-        return Collections.singletonList(sampleBooking);
+        return (List<BookingDataModel>) bookingDataSource.findAll();
     }
 
     @Override
-    public BookingDataModel deleteBooking(String bookingId) {
-        return null;
+    public void deleteBooking(Integer bookingId) {
+        bookingDataSource.deleteById(bookingId);
     }
 }

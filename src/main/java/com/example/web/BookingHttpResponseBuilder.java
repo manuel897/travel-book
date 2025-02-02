@@ -14,8 +14,8 @@ public class BookingHttpResponseBuilder implements BookingPresenter {
     private ResponseEntity<String> stringResponse;
 
     @Override
-    public void presentBookingCreated(String createdBookingId) {
-        stringResponse = createStringResponse("Booking with id " + createdBookingId + " created");
+    public void presentBookingCreated(String name) {
+        stringResponse = createStringResponse("Booking " + name + " created");
     }
 
     @Override

@@ -6,10 +6,9 @@ import com.example.models.booking.BookingInputDto;
 import com.example.domain.booking.models.BookingNotFoundException;
 import com.example.domain.user.UserNotFoundException;
 import com.example.domain.user.UserRepository;
-import com.example.domain.user.UserRole;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
+import java.util.Optional;
 
 @Component
 public class DeleteBooking {
@@ -28,25 +27,14 @@ public class DeleteBooking {
     }
 
     public void call(BookingInputDto bookingModel) {
-        final UserDataModel actionUser = userRepository.findByUserId(bookingModel.userId);
-        if(actionUser == null) {
+        final Optional<UserDataModel> actionUser = userRepository.findByUsername(bookingModel.userId);
+        if(actionUser.isEmpty()) {
             throw new UserNotFoundException("User id " + bookingModel.userId + " not found");
         }
 
-        final BookingDataModel existingBooking = bookingRepository.findByBookingId(bookingModel.bookingId);
-        if(existingBooking == null) {
-            throw new BookingNotFoundException(bookingModel.bookingId);
-        }
+        final Optional<BookingDataModel> existingBooking = bookingRepository.findByBookingId(bookingModel.bookingId);
+        throw new BookingNotFoundException(bookingModel.bookingId.toString());
 
         // only owner or manager can delete booking
-        final boolean isActionAllowed = Objects.equals(existingBooking.getOwnerId(), bookingModel.userId)
-                || UserRole.MANAGER.name().equals(actionUser.getUserRoleId());
-        if(!isActionAllowed) {
-            bookingPresenter.presentActionNotAllowed();
-            return;
-        }
-
-        bookingRepository.deleteBooking((existingBooking.getBookingId()));
-        bookingPresenter.presentBookingDeleted(bookingModel.bookingId);
     }
 }
