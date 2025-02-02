@@ -9,6 +9,9 @@ server/.idea/modules.xml
 server/.idea/jarRepositories.xml
 server/.idea/compiler.xml
 server/.idea/libraries/
+server/shelf/
+server/workspace.xml
+
 *.iws
 *.iml
 *.ipr
