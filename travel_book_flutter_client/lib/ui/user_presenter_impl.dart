@@ -1,13 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:travel_book_flutter_client/domain/user/user_presenter.dart';
+import 'package:travel_book_flutter_client/ui/user_state_notifier.dart';
 
 class UserPresenterImpl implements UserPresenter {
-  @override
-  void presentLoginScreen() {
-    // TODO: implement presentLoginScreen
-  }
+  final BuildContext _context;
+  final UserStateNotifier _stateNotifier;
+
+  UserPresenterImpl({
+    required BuildContext context,
+    required UserStateNotifier userStateNotifier,
+  })  : _context = context,
+        _stateNotifier = userStateNotifier;
 
   @override
   void presentUserIsLoggedIn() {
-    // TODO: implement presentUserIsLoggedIn
+    _stateNotifier.setIsUserLoggedIn(false);
+
+    showDialog(
+      context: _context,
+      builder: (_) => const Text("User is logged in!"),
+    );
   }
 }

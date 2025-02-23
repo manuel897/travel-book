@@ -2,20 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_book_flutter_client/data/local_repository_impl.dart';
 import 'package:travel_book_flutter_client/data/user_repository_impl.dart';
+import 'package:travel_book_flutter_client/domain/local_repository.dart';
+import 'package:travel_book_flutter_client/domain/navigation_presenter.dart';
 import 'package:travel_book_flutter_client/domain/user/login_user.dart';
+import 'package:travel_book_flutter_client/domain/user/user_presenter.dart';
+import 'package:travel_book_flutter_client/domain/user/user_repository.dart';
+import 'package:travel_book_flutter_client/ui/navigation_presenter_impl.dart';
+import 'package:travel_book_flutter_client/ui/user/user_section.dart';
 import 'package:travel_book_flutter_client/ui/user_presenter_impl.dart';
+import 'package:travel_book_flutter_client/ui/user_state.dart';
+import 'package:travel_book_flutter_client/ui/user_state_notifier.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
-      Provider(create: (_) => LocalRepositoryImpl()),
-      Provider(create: (_) => UserRepositoryImpl()),
-      Provider(create: (_) => UserPresenterImpl()),
-      Provider(
-          create: (ctx) => LoginUser(
-                userRepository: ctx.read(),
-                userPresenter: ctx.read(),
-                navigationPresenter: ctx.read(),
+      // -- repositories --
+      Provider<LocalRepository>(create: (_) => LocalRepositoryImpl()),
+      Provider<UserRepository>(create: (_) => UserRepositoryImpl()),
+
+      ChangeNotifierProvider(
+          create: (_) => UserStateNotifier(
+                const UserState(isLoggedIn: false),
               ))
     ],
     child: const MyApp(),
@@ -33,7 +40,26 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MultiProvider(providers: [
+        // -- presenters --
+        Provider<UserPresenter>(
+          create: (ctx) => UserPresenterImpl(
+            context: ctx,
+            userStateNotifier: ctx.read(),
+          ),
+        ),
+        Provider<NavigationPresenter>(
+            create: (ctx) => NavigationPresenterImpl(context: ctx)),
+
+        /// -- use cases --
+        Provider(
+          create: (ctx) => LoginUser(
+            userRepository: ctx.read(),
+            userPresenter: ctx.read(),
+            navigationPresenter: ctx.read(),
+          ),
+        )
+      ], child: const MyHomePage(title: 'Flutter Demo Home Page')),
     );
   }
 }
@@ -49,6 +75,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    super.initState();
+
+    final loginUser = context.read<LoginUser>();
+    loginUser();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -58,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'Hello world',
             ),
+            const UserSection(),
             ElevatedButton(
               onPressed: () => _insertDummyData(),
               child: const Text('Add data'),
