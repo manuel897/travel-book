@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_book_flutter_client/data/local_repository_impl.dart';
+import 'package:travel_book_flutter_client/data/user_repository_impl.dart';
+import 'package:travel_book_flutter_client/domain/user/login_user.dart';
+import 'package:travel_book_flutter_client/ui/user_presenter_impl.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      Provider(create: (_) => LocalRepositoryImpl()),
+      Provider(create: (_) => UserRepositoryImpl()),
+      Provider(create: (_) => UserPresenterImpl()),
+      Provider(
+          create: (ctx) => LoginUser(
+                userRepository: ctx.read(),
+                userPresenter: ctx.read(),
+                navigationPresenter: ctx.read(),
+              ))
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
