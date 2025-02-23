@@ -3,12 +3,12 @@ import 'package:travel_book_flutter_client/domain/navigation_presenter.dart'
 import 'package:travel_book_flutter_client/domain/user/user_presenter.dart';
 import 'package:travel_book_flutter_client/domain/user/user_repository.dart';
 
-class UserLogin {
+class LoginUser {
   final UserRepository _userRepository;
   final NavigationPresenter _navigationPresenter;
   final UserPresenter _userPresenter;
 
-  UserLogin(
+  LoginUser(
       {required UserRepository userRepository,
       required NavigationPresenter navigationPresenter,
       required UserPresenter userPresenter})

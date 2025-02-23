@@ -1,9 +1,9 @@
 import 'package:travel_book_flutter_client/domain/user/login_user.dart';
 
 class UserController {
-  final UserLogin _userLogin;
+  final LoginUser _userLogin;
 
-  UserController({required UserLogin userLogin}) : _userLogin = userLogin;
+  UserController({required LoginUser userLogin}) : _userLogin = userLogin;
 
   void onOpenApp() {
     _userLogin();
