@@ -1,10 +1,9 @@
-class UserState {
-  UserState({required bool isLoggedIn}) : _isLoggedIn = isLoggedIn;
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-  bool _isLoggedIn = false;
+part 'user_state.freezed.dart';
 
-  bool get isLoggedIn => _isLoggedIn;
-
-  UserState copyWith({required bool isLoggedIn}) =>
-      UserState(isLoggedIn: isLoggedIn);
+@freezed
+class UserState with _$UserState {
+  const factory UserState({required bool isLoggedIn}) = _UserState;
 }
