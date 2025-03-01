@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_book_flutter_client/ui/user/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -9,6 +10,7 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            const SizedBox(width: 300, child: LoginForm()),
             ElevatedButton(
               child: const Text('Go back!'),
               onPressed: () {
@@ -19,6 +21,5 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
