@@ -1,3 +1,3 @@
 abstract class UserRepository {
-  bool isUserLoggedIn();
+  Future<bool> isUserLoggedIn();
 }

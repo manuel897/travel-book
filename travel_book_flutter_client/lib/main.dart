@@ -3,12 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:travel_book_flutter_client/data/local_repository_impl.dart';
 import 'package:travel_book_flutter_client/data/user_repository_impl.dart';
 import 'package:travel_book_flutter_client/domain/local_repository.dart';
-import 'package:travel_book_flutter_client/domain/navigation_presenter.dart';
 import 'package:travel_book_flutter_client/domain/user/login_user.dart';
 import 'package:travel_book_flutter_client/domain/user/user_presenter.dart';
 import 'package:travel_book_flutter_client/domain/user/user_repository.dart';
-import 'package:travel_book_flutter_client/ui/navigation_presenter_impl.dart';
-import 'package:travel_book_flutter_client/ui/user/user_section.dart';
 import 'package:travel_book_flutter_client/ui/user_presenter_impl.dart';
 import 'package:travel_book_flutter_client/ui/user_state.dart';
 import 'package:travel_book_flutter_client/ui/user_state_notifier.dart';
@@ -32,12 +29,26 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  final ColorScheme c = const ColorScheme(
+    brightness: Brightness.dark, // Change to Brightness.dark for dark mode
+    primary: Color(0xFF595959), // A vibrant blue
+    onPrimary: Colors.red, // Text/icon color on primary
+    secondary: Color(0xFFFF9500), // A warm orange
+    onSecondary: Colors.green, // Text/icon color on secondary
+
+    // surface: Color(0xFF4B4B4A),
+    surface: Color(0xFFCACDC5),
+    onSurface: Color(0xFF04090D), // Text/icon color on surface
+    error: Color(0xFFFF3B30), // A bold red for errors
+    onError: Colors.white, // Text/icon color on error
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Travel Book',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: c,
         useMaterial3: true,
       ),
       home: MultiProvider(providers: [
@@ -48,15 +59,12 @@ class MyApp extends StatelessWidget {
             userStateNotifier: ctx.read(),
           ),
         ),
-        Provider<NavigationPresenter>(
-            create: (ctx) => NavigationPresenterImpl(context: ctx)),
 
         /// -- use cases --
         Provider(
           create: (ctx) => LoginUser(
             userRepository: ctx.read(),
             userPresenter: ctx.read(),
-            navigationPresenter: ctx.read(),
           ),
         )
       ], child: const MyHomePage(title: 'Flutter Demo Home Page')),
@@ -77,43 +85,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-
-    final loginUser = context.read<LoginUser>();
-    loginUser();
   }
 
   @override
   Widget build(BuildContext context) {
+    final loginUser = context.read<LoginUser>();
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Hello world',
-            ),
-            const UserSection(),
-            ElevatedButton(
-              onPressed: () => _insertDummyData(),
-              child: const Text('Add data'),
-            ),
-            ElevatedButton(
-              onPressed: () => _removeDummyData(),
-              child: const Text('Remove data'),
-            )
-          ],
-        ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-
-  _insertDummyData() {
-    final db = LocalRepositoryImpl();
-    db.save({"day_1": "monday"});
-  }
-
-  _removeDummyData() {
-    final db = LocalRepositoryImpl();
-    db.deleteValue(key: "da y_1");
+        body: FutureBuilder(
+            future: loginUser(),
+            builder: (_, __) {
+              return const Text("Loading");
+            }) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 }
