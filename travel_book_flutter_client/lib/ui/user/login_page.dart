@@ -6,19 +6,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            const SizedBox(width: 300, child: LoginForm()),
-            ElevatedButton(
-              child: const Text('Go back!'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
+        child: LoginForm(),
       ),
     );
   }
