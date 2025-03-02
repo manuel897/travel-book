@@ -29,12 +29,26 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  final ColorScheme c = const ColorScheme(
+    brightness: Brightness.dark, // Change to Brightness.dark for dark mode
+    primary: Color(0xFF595959), // A vibrant blue
+    onPrimary: Colors.red, // Text/icon color on primary
+    secondary: Color(0xFFFF9500), // A warm orange
+    onSecondary: Colors.green, // Text/icon color on secondary
+
+    // surface: Color(0xFF4B4B4A),
+    surface: Color(0xFFCACDC5),
+    onSurface: Color(0xFF04090D), // Text/icon color on surface
+    error: Color(0xFFFF3B30), // A bold red for errors
+    onError: Colors.white, // Text/icon color on error
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Travel Book',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: c,
         useMaterial3: true,
       ),
       home: MultiProvider(providers: [

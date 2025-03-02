@@ -23,7 +23,7 @@ class _LoginFormState extends State<LoginForm> {
               child: Column(
                 children: <Widget>[
                   Image.asset(
-                    'assets/logo_2.png',
+                    'assets/logo_2_cropped.png',
                     height: 300,
                     width: 300,
                   ),
