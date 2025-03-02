@@ -22,6 +22,12 @@ class _LoginFormState extends State<LoginForm> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
+                  Image.asset(
+                    'assets/logo_2.png',
+                    height: 300,
+                    width: 300,
+                  ),
+                  const SizedBox(height: 32),
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: "Username",
