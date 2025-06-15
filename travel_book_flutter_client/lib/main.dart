@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_book_flutter_client/data/local_repository_impl.dart';
+import 'package:travel_book_flutter_client/repositories/local_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,12 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _insertDummyData() {
-    final db = LocalRepositoryImpl();
+    final db = LocalRepository();
     db.save({"day_1": "monday"});
   }
 
   _removeDummyData() {
-    final db = LocalRepositoryImpl();
-    db.deleteValue(key: "da y_1");
+    final db = LocalRepository();
+    db.deleteValue(key: "day_1");
   }
 }
