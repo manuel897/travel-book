@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Travel Book Home Page'),
     );
   }
 }
@@ -33,26 +33,38 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Hello world',
-            ),
-            ElevatedButton(
-              onPressed: () => _insertDummyData(),
-              child: const Text('Add data'),
-            ),
-            ElevatedButton(
-              onPressed: () => _removeDummyData(),
-              child: const Text('Remove data'),
-            )
-          ],
-        ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    return Scaffold(body: LayoutBuilder(
+      builder: (context, constraints) {
+        var screenSize = MediaQuery.of(context).size;
+        var orientation = MediaQuery.of(context).orientation;
+
+        return (constraints.maxWidth > 600)
+            ? Row(
+                children: <Widget>[
+                  NavigationRail(
+                    destinations: const <NavigationRailDestination>[
+                      NavigationRailDestination(
+                        icon: Icon(Icons.calendar_month_sharp),
+                        label: Text('Calender'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.account_box),
+                        label: Text('User'),
+                      )
+                    ],
+                    selectedIndex: 0,
+                    onDestinationSelected: (i) {},
+                  ),
+                  const VerticalDivider(
+                    thickness: 1,
+                    width: 1,
+                  ),
+                  const Placeholder(),
+                ],
+              )
+            : Placeholder();
+      },
+    ));
   }
 
   _insertDummyData() {
