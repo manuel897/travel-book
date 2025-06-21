@@ -33,38 +33,56 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: LayoutBuilder(
-      builder: (context, constraints) {
-        var screenSize = MediaQuery.of(context).size;
-        var orientation = MediaQuery.of(context).orientation;
+    var screenSize = MediaQuery.of(context).size;
+    var orientation = MediaQuery.of(context).orientation;
 
-        return (constraints.maxWidth > 600)
-            ? Row(
-                children: <Widget>[
-                  NavigationRail(
-                    destinations: const <NavigationRailDestination>[
-                      NavigationRailDestination(
-                        icon: Icon(Icons.calendar_month_sharp),
-                        label: Text('Calender'),
+    return Scaffold(
+        body: LayoutBuilder(
+          builder: (context, _) {
+            return (screenSize.width > 600)
+                ? Row(
+                    children: <Widget>[
+                      NavigationRail(
+                        destinations: const <NavigationRailDestination>[
+                          NavigationRailDestination(
+                            icon: Icon(Icons.calendar_month_sharp),
+                            label: Text('Calender'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.account_box),
+                            label: Text('User'),
+                          )
+                        ],
+                        selectedIndex: 0,
+                        onDestinationSelected: (i) {
+                          // TODO: navigate to screen go_router
+                        },
                       ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.account_box),
-                        label: Text('User'),
-                      )
+                      const VerticalDivider(
+                        thickness: 1,
+                        width: 1,
+                      ),
+                      const Placeholder(),
                     ],
-                    selectedIndex: 0,
-                    onDestinationSelected: (i) {},
+                  )
+                : Placeholder();
+          },
+        ),
+        bottomNavigationBar: screenSize.width <= 600
+            ? BottomNavigationBar(
+                currentIndex: 0,
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.calendar_month_sharp),
+                    label: 'Calender',
                   ),
-                  const VerticalDivider(
-                    thickness: 1,
-                    width: 1,
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.account_box),
+                    label: 'User',
                   ),
-                  const Placeholder(),
                 ],
               )
-            : Placeholder();
-      },
-    ));
+            : null);
   }
 
   _insertDummyData() {
