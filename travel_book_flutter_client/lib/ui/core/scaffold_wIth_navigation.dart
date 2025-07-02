@@ -23,17 +23,18 @@ class _ScaffoldWithNavigationState extends State<ScaffoldWithNavigation> {
           children: [
             if (screenSize.width > 600)
               NavigationRail(
-                  onDestinationSelected: (i) => _openScreen(i, context),
-                  destinations: <NavigationRailDestination>[
-                    NavigationRailDestination(
-                        icon: Icon(AppSection.home.icon),
-                        label: Text(AppSection.home.label)),
-                    NavigationRailDestination(
-                        icon: Icon(AppSection.user.icon),
-                        label: Text(AppSection.user.label)),
-                  ],
-                  selectedIndex: _selected.index),
-            widget.screen,
+                onDestinationSelected: (i) => _openScreen(i, context),
+                destinations: <NavigationRailDestination>[
+                  NavigationRailDestination(
+                      icon: Icon(AppSection.home.icon),
+                      label: Text(AppSection.home.label)),
+                  NavigationRailDestination(
+                      icon: Icon(AppSection.user.icon),
+                      label: Text(AppSection.user.label)),
+                ],
+                selectedIndex: _selected.index,
+              ),
+            Expanded(child: widget.screen),
           ],
         ),
         bottomNavigationBar: screenSize.width <= 600
