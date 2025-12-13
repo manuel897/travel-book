@@ -12,14 +12,16 @@ class CalenderOverviewList extends StatefulWidget {
 class _CalenderOverviewListState extends State<CalenderOverviewList> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: DataTable(
-      columns: const [
-        DataColumn(label: Text("DATE")),
-        DataColumn(label: Text("DAY")),
-        DataColumn(label: Text("BOOKINGS")),
-      ],
-      rows: widget.rows,
-    ));
+    return Expanded(
+      child: SingleChildScrollView(
+          child: DataTable(
+        columns: const [
+          DataColumn(label: Text("DATE")),
+          DataColumn(label: Text("DAY")),
+          DataColumn(label: Text("BOOKINGS")),
+        ],
+        rows: widget.rows,
+      )),
+    );
   }
 }

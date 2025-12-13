@@ -15,8 +15,14 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    return CalenderOverviewList(
-      rows: widget.viewModel.getCalenderRows(year: now.year, month: now.month),
+    return Column(
+      children: [
+        Placeholder(), // TODO filter
+        CalenderOverviewList(
+          rows: widget.viewModel
+              .getCalenderRows(year: now.year, month: now.month),
+        ),
+      ],
     );
   }
 }

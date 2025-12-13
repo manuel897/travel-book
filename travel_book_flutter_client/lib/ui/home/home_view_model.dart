@@ -8,7 +8,7 @@ class HomeViewModel {
         .duration
         .inDays;
     final today = DateTime.now();
-    final isCurrentMonthSelected = today.month == month;
+    final isCurrentMonthSelected = today.month == month && today.year == year;
     final List<DataRow> rows = [];
 
     for (var i = 1; i <= daysOfMonth; i++) {
@@ -16,13 +16,13 @@ class HomeViewModel {
 
       rows.add(DataRow(
           color: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> s) {
-            if (isCurrentMonthSelected && today.day == i) {
+            if (isCurrentMonthSelected && i == today.day) {
               return Colors.grey;
             }
           }),
           cells: [
             DataCell(
-              Text(i.toString()),
+              Text("${date.day}/${date.month}/${date.year}"),
             ),
             DataCell(Text(_getDayName(date.weekday))),
             const DataCell(Text("NO BOOKING FOUND.")),
