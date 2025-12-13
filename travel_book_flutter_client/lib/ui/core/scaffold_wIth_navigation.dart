@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travel_book_flutter_client/ui/core/app_section.dart';
+import 'package:travel_book_flutter_client/ui/core/shared.dart';
 
 class ScaffoldWithNavigation extends StatefulWidget {
   final Widget screen;
@@ -21,7 +22,7 @@ class _ScaffoldWithNavigationState extends State<ScaffoldWithNavigation> {
     return Scaffold(
         body: Row(
           children: [
-            if (screenSize.width > 600)
+            if (screenSize.width > maxMobileScreenSize)
               NavigationRail(
                 onDestinationSelected: (i) => _openScreen(i, context),
                 destinations: <NavigationRailDestination>[
@@ -37,7 +38,7 @@ class _ScaffoldWithNavigationState extends State<ScaffoldWithNavigation> {
             Expanded(child: widget.screen),
           ],
         ),
-        bottomNavigationBar: screenSize.width <= 600
+        bottomNavigationBar: screenSize.width <= maxMobileScreenSize
             ? BottomNavigationBar(
                 currentIndex: _selected.index,
                 items: <BottomNavigationBarItem>[
