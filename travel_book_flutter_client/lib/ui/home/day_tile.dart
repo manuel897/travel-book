@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DayTile extends StatelessWidget {
-  final int day;
+  final String content;
   final bool isSelected;
 
-  const DayTile({super.key, required this.day, this.isSelected = false});
+  const DayTile({super.key, required this.content, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class DayTile extends StatelessWidget {
         color: isSelected ? Colors.teal[500] : Colors.teal[100],
         child: Center(
             child: Text(
-          day.toString(),
+          content,
           style: const TextStyle(fontSize: 20),
         )),
       ),
