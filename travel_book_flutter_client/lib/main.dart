@@ -36,6 +36,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Travel Book',
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData(
+          canvasColor: Colors.black,
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.orange, brightness: Brightness.dark),
+          useMaterial3: true),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
