@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:travel_book_flutter_client/ui/core/app_section.dart';
 import 'package:travel_book_flutter_client/ui/core/scaffold_wIth_navigation.dart';
 import 'package:travel_book_flutter_client/ui/home/home_view.dart';
+import 'package:travel_book_flutter_client/ui/home/home_view_model.dart';
 import 'package:travel_book_flutter_client/ui/user/user_view.dart';
 
 void main() {
@@ -15,7 +16,9 @@ final _router = GoRouter(initialLocation: AppSection.home.path, routes: [
       routes: <RouteBase>[
         GoRoute(
           path: AppSection.home.path,
-          builder: (_, __) => const HomeView(),
+          builder: (_, __) => HomeView(
+            viewModel: HomeViewModel(),
+          ),
         ),
         GoRoute(
           path: AppSection.user.path,
