@@ -14,13 +14,20 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
     return Column(
       children: [
         Placeholder(), // TODO filter
-        CalenderOverviewList(
-          rows: widget.viewModel
-              .getCalenderRows(year: now.year, month: now.month),
+        ListenableBuilder(
+          listenable: widget.viewModel,
+          builder: (context, _) {
+            final year = widget.viewModel.state?.selectedYear;
+            final month = widget.viewModel.state?.selectedMonth;
+            return CalenderOverviewList(
+              rows: month != null && year != null
+                  ? widget.viewModel.getCalenderRows(year: year, month: month)
+                  : [],
+            );
+          },
         ),
       ],
     );

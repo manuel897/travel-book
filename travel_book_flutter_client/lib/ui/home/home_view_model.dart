@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:travel_book_flutter_client/ui/home/home_ui_state.dart';
 
-class HomeViewModel {
+class HomeViewModel extends ChangeNotifier {
+  HomeViewModel() {
+    final today = DateTime.now();
+    _state = HomeUiState(selectedYear: today.year, selectedMonth: today.month);
+  }
+
+  HomeUiState? _state;
+
+  HomeUiState? get state => _state;
+
   /// Get rows to display in the calender list view based on the
   List<DataRow> getCalenderRows({required int year, required int month}) {
     final daysOfMonth = DateTimeRange(
@@ -19,6 +29,9 @@ class HomeViewModel {
             if (isCurrentMonthSelected && i == today.day) {
               return Colors.grey;
             }
+
+            // no color by default
+            return null;
           }),
           cells: [
             DataCell(
