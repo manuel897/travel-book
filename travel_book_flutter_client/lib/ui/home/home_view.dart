@@ -20,28 +20,32 @@ class _HomeViewState extends State<HomeView> {
       children: [
         OutlinedButton(
             onPressed: () async {
-              final year = await showDatePicker(
+              final selection = await showDatePicker(
                   context: context,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(3000),
-                  helpText: "Select start year",
-                  currentDate: widget.viewModel.state?.selectedYear != null
-                      ? DateTime(widget.viewModel.state!.selectedYear)
+                  helpText: "Select start date",
+                  currentDate: widget.viewModel.state?.startDate != null
+                      ? widget.viewModel.state!.startDate
                       : null,
                   initialDatePickerMode: DatePickerMode.year);
 
-              if (year != null) widget.viewModel.onChangeYear(year.year);
+              if (selection != null) {
+                widget.viewModel.onChangeStartDate(selection);
+              }
             },
-            child: const Text('Select year')),
+            child: const Text('Select start date')),
         // TODO filter
         ListenableBuilder(
           listenable: widget.viewModel,
           builder: (context, _) {
-            final year = widget.viewModel.state?.selectedYear;
-            final month = widget.viewModel.state?.selectedMonth;
+            final startDate = widget.viewModel.state?.startDate;
+            final endDate = widget.viewModel.state?.endDate;
             return CalenderOverviewList(
-              rows: month != null && year != null
-                  ? widget.viewModel.getCalenderRows(year: year, month: month)
+              startDate: startDate,
+              endDate: endDate,
+              rows: startDate != null
+                  ? widget.viewModel.getCalenderRows(startDate: startDate)
                   : [],
             );
           },

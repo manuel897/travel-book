@@ -4,7 +4,7 @@ import 'package:travel_book_flutter_client/ui/home/home_ui_state.dart';
 class HomeViewModel extends ChangeNotifier {
   HomeViewModel() {
     final today = DateTime.now();
-    _state = HomeUiState(selectedYear: today.year, selectedMonth: today.month);
+    _state = HomeUiState(startDate: today, endDate: _getLastDayOfMonth(today));
   }
 
   HomeUiState? _state;
@@ -12,17 +12,19 @@ class HomeViewModel extends ChangeNotifier {
   HomeUiState? get state => _state;
 
   /// Get rows to display in the calender list view based on the
-  List<DataRow> getCalenderRows({required int year, required int month}) {
-    final daysOfMonth = DateTimeRange(
-            start: DateTime(year, month), end: DateTime(year, month + 1))
+  List<DataRow> getCalenderRows({required DateTime startDate}) {
+    final daysOfMonthCount = DateTimeRange(
+            start: DateTime(startDate.year, startDate.month),
+            end: DateTime(startDate.year, startDate.month + 1))
         .duration
         .inDays;
     final today = DateTime.now();
-    final isCurrentMonthSelected = today.month == month && today.year == year;
+    final isCurrentMonthSelected =
+        today.month == startDate.month && today.year == startDate.year;
     final List<DataRow> rows = [];
 
-    for (var i = 1; i <= daysOfMonth; i++) {
-      final date = DateTime(year, month, i);
+    for (var i = 1; i <= daysOfMonthCount; i++) {
+      final date = DateTime(startDate.year, startDate.month, i);
 
       rows.add(DataRow(
           color: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> s) {
@@ -66,8 +68,15 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
-  onChangeYear(int year) {
-    _state = _state?.copyWith(selectedYear: year);
+  onChangeStartDate(DateTime startDate) {
+    _state = _state?.copyWith(
+        startDate: startDate, endDate: _getLastDayOfMonth(startDate));
     notifyListeners();
+  }
+
+  /// Returns last day of [day]'s month.
+  DateTime _getLastDayOfMonth(DateTime day) {
+    final firstDayOfNextMonth = DateTime(day.year, day.month + 1);
+    return firstDayOfNextMonth.subtract(Duration(days: 1));
   }
 }
