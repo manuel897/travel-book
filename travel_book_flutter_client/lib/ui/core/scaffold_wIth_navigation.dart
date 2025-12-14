@@ -22,7 +22,7 @@ class _ScaffoldWithNavigationState extends State<ScaffoldWithNavigation> {
     return Scaffold(
         appBar: AppBar(
           // TODO get color from theme
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text(_selectedAppSection.label),
         ),
         body: Row(
