@@ -65,4 +65,9 @@ class HomeViewModel extends ChangeNotifier {
         return "-";
     }
   }
+
+  onChangeYear(int year) {
+    _state = _state?.copyWith(selectedYear: year);
+    notifyListeners();
+  }
 }

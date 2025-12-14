@@ -12,11 +12,28 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Placeholder(), // TODO filter
+        OutlinedButton(
+            onPressed: () async {
+              final year = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(3000),
+                  helpText: "Select start year",
+                  currentDate: widget.viewModel.state?.selectedYear != null
+                      ? DateTime(widget.viewModel.state!.selectedYear)
+                      : null,
+                  initialDatePickerMode: DatePickerMode.year);
+
+              if (year != null) widget.viewModel.onChangeYear(year.year);
+            },
+            child: const Text('Select year')),
+        // TODO filter
         ListenableBuilder(
           listenable: widget.viewModel,
           builder: (context, _) {
