@@ -41,14 +41,13 @@ class _MyAppState extends State<MyApp> {
       title: 'Travel Book',
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
-          canvasColor: Colors.black,
+          brightness: Brightness.dark,
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.orange, brightness: Brightness.dark),
+            seedColor: Colors.orange,
+            brightness: Brightness.dark,
+            primary: Colors.red,
+          ),
           useMaterial3: true),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
       routerConfig: _router,
     );
   }

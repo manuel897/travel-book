@@ -13,13 +13,18 @@ class ScaffoldWithNavigation extends StatefulWidget {
 }
 
 class _ScaffoldWithNavigationState extends State<ScaffoldWithNavigation> {
-  AppSection _selected = AppSection.home;
+  AppSection _selectedAppSection = AppSection.home;
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+        appBar: AppBar(
+          // TODO get color from theme
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(_selectedAppSection.label),
+        ),
         body: Row(
           children: [
             if (screenSize.width > maxMobileScreenSize)
@@ -33,14 +38,14 @@ class _ScaffoldWithNavigationState extends State<ScaffoldWithNavigation> {
                       icon: Icon(AppSection.user.icon),
                       label: Text(AppSection.user.label)),
                 ],
-                selectedIndex: _selected.index,
+                selectedIndex: _selectedAppSection.index,
               ),
             Expanded(child: widget.screen),
           ],
         ),
         bottomNavigationBar: screenSize.width <= maxMobileScreenSize
             ? BottomNavigationBar(
-                currentIndex: _selected.index,
+                currentIndex: _selectedAppSection.index,
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: Icon(AppSection.home.icon),
@@ -61,7 +66,7 @@ class _ScaffoldWithNavigationState extends State<ScaffoldWithNavigation> {
   void _openScreen(int i, BuildContext context) {
     final section = _getAppSection(i);
     setState(() {
-      _selected = section;
+      _selectedAppSection = section;
     });
     context.go(section.path);
   }
