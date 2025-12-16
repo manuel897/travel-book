@@ -22,15 +22,18 @@ class DateRangeRow extends StatelessWidget {
         // End date on the left
         Text(
           _formatDate(endDate),
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
 
-        const Text("→"),
+        Text(
+          "-",
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
 
         // Start date on the right
         Text(
           _formatDate(startDate),
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ],
     );

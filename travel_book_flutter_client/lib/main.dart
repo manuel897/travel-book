@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:travel_book_flutter_client/data/booking/booking_repository.dart';
+import 'package:travel_book_flutter_client/data/booking/booking_service.dart';
 import 'package:travel_book_flutter_client/ui/core/app_color_theme.dart';
 import 'package:travel_book_flutter_client/ui/core/app_section.dart';
 import 'package:travel_book_flutter_client/ui/core/scaffold_wIth_navigation.dart';
@@ -18,7 +20,8 @@ final _router = GoRouter(initialLocation: AppSection.home.path, routes: [
         GoRoute(
           path: AppSection.home.path,
           builder: (_, __) => HomeView(
-            viewModel: HomeViewModel(),
+            viewModel: HomeViewModel(
+                BookingRepository(bookingService: BookingService())),
           ),
         ),
         GoRoute(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:travel_book_flutter_client/data/booking/booking_repository.dart';
 import 'package:travel_book_flutter_client/ui/home/home_ui_state.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  HomeViewModel() {
+  final BookingRepository bookingRepository;
+
+  HomeViewModel(this.bookingRepository) {
     final today = DateTime.now();
     _state = HomeUiState(startDate: today, endDate: _getLastDayOfMonth(today));
   }
