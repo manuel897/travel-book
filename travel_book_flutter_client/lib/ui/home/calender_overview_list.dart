@@ -19,6 +19,7 @@ class CalenderOverviewList extends StatefulWidget {
 class _CalenderOverviewListState extends State<CalenderOverviewList> {
   @override
   Widget build(BuildContext context) {
+    print('calnderOverviewViewModel.build()');
     final start = widget.startDate;
     final end = widget.endDate;
 

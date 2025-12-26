@@ -21,7 +21,7 @@ class DateRangeRow extends StatelessWidget {
       children: [
         // End date on the left
         Text(
-          _formatDate(endDate),
+          _formatDate(startDate),
           style: Theme.of(context).textTheme.titleLarge,
         ),
 
@@ -32,7 +32,7 @@ class DateRangeRow extends StatelessWidget {
 
         // Start date on the right
         Text(
-          _formatDate(startDate),
+          _formatDate(endDate),
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ],

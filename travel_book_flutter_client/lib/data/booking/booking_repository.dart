@@ -7,8 +7,8 @@ class BookingRepository {
   BookingRepository({required BookingService bookingService})
       : _bookingService = bookingService;
 
-  Future<List<Booking>> findBookingInRange(
+  Future<List<Booking>> findBookingsInRange(
       {required DateTime start, DateTime? end}) async {
-    return _bookingService.findBookingInRange(start: start, end: end);
+    return _bookingService.findBy(start: start, end: end);
   }
 }

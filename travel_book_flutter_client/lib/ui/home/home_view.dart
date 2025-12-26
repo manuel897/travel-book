@@ -13,6 +13,12 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   @override
+  void initState() {
+    super.initState();
+    widget.viewModel.onChangeStartDate(DateTime.now());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -23,9 +29,7 @@ class _HomeViewState extends State<HomeView> {
                   firstDate: DateTime(2000),
                   lastDate: DateTime(3000),
                   helpText: "Select start date",
-                  currentDate: widget.viewModel.state?.startDate != null
-                      ? widget.viewModel.state!.startDate
-                      : null,
+                  currentDate: widget.viewModel.state.value?.startDate,
                   initialDatePickerMode: DatePickerMode.year);
 
               if (selection != null) {
@@ -33,17 +37,21 @@ class _HomeViewState extends State<HomeView> {
               }
             },
             child: const Text('Select start date')),
-        // TODO filter
         ListenableBuilder(
-          listenable: widget.viewModel,
+          listenable: widget.viewModel.state,
           builder: (context, _) {
-            final startDate = widget.viewModel.state?.startDate;
-            final endDate = widget.viewModel.state?.endDate;
+            final startDate = widget.viewModel.state.value?.startDate;
+            final endDate = widget.viewModel.state.value?.endDate;
+            final bookings =
+                widget.viewModel.state.value?.bookingsSearchResult ?? [];
             return CalenderOverviewList(
               startDate: startDate,
               endDate: endDate,
-              rows: startDate != null
-                  ? widget.viewModel.getCalenderRows(startDate: startDate)
+              rows: startDate != null && endDate != null
+                  ? widget.viewModel.getCalenderRows(
+                      startDate: startDate,
+                      endDate: endDate,
+                      bookingList: bookings)
                   : [],
             );
           },
