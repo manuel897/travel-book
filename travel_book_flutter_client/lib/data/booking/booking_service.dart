@@ -9,7 +9,7 @@ class BookingService {
     final booking = Booking(
         name: "xyz - trip to place b",
         numberPlate: "ab 123",
-        departure: 'placee a',
+        departure: 'place a',
         arrival: 'place b',
         unitLength: DistanceUnit.km,
         startTime: today,

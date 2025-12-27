@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:travel_book_flutter_client/ui/home/calender/day_view_model.dart';
 
-class DayView extends StatelessWidget {
+class DayView extends StatefulWidget {
   final DateTime day;
+  final DayViewModel dayViewModel;
 
-  const DayView({super.key, required this.day});
+  DayView({super.key, required this.day, required this.dayViewModel});
+
+  @override
+  State<DayView> createState() => _DayViewState();
+}
+
+class _DayViewState extends State<DayView> {
+  @override
+  void initState() {
+    super.initState();
+    widget.dayViewModel.onChangeSelectedDate(widget.day);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +24,30 @@ class DayView extends StatelessWidget {
       OutlinedButton(
           onPressed: () => Navigator.pop(context),
           child: const Text("Back to Home")),
-      Text(day.toString()),
-      Card()
+      Text(widget.day.toString()),
+      ListenableBuilder(
+          listenable: widget.dayViewModel.state,
+          builder: (context, _) {
+            return LayoutBuilder(builder: (context, constraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ...(widget.dayViewModel.state.value?.bookingsSearchResult ??
+                            [])
+                        .map((b) {
+                      return Card(
+                        child: Text(
+                            "${b.departure} to ${b.arrival} by ${b.firstDriverName}"),
+                      );
+                    })
+                  ],
+                ),
+              ));
+            });
+          }),
     ]);
   }
 }

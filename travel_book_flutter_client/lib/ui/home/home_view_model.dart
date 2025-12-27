@@ -3,8 +3,8 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:travel_book_flutter_client/data/booking/booking_repository.dart';
 import 'package:travel_book_flutter_client/ui/home/home_ui_state.dart';
+import 'package:travel_book_flutter_client/utils/booking_mapper.dart';
 
-import '../../data/booking/booking.dart';
 import '../booking/booking_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
@@ -13,7 +13,7 @@ class HomeViewModel extends ChangeNotifier {
 
   ValueNotifier<HomeUiState?> get state => _state;
 
-  HomeViewModel(this.bookingRepository)
+  HomeViewModel({required this.bookingRepository})
       : _state = ValueNotifier(HomeUiState(
           startDate: DateTime.now(),
           bookingsSearchResult: [],
@@ -114,7 +114,7 @@ class HomeViewModel extends ChangeNotifier {
       start: startDate,
       end: DateTime(startDate.year, startDate.month, daysOfStartMonthCount),
     ))
-            .map((b) => _createBookingModel(b))
+            .map((b) => BookingMapper().createBookingModel(b))
             .toList();
 
     _state.value = _state.value?.copyWith(
@@ -128,38 +128,6 @@ class HomeViewModel extends ChangeNotifier {
   DateTime _getLastDayOfMonth(DateTime day) {
     final firstDayOfNextMonth = DateTime(day.year, day.month + 1);
     return firstDayOfNextMonth.subtract(const Duration(days: 1));
-  }
-
-  /// Returns color to display appropriate to the status
-  Color _getStatusColorOfbookingListtatusId(int statusId) {
-    switch (statusId) {
-      case 0:
-        return Colors.yellow;
-      case 1:
-        return Colors.green;
-      case 2:
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  BookingModel _createBookingModel(Booking b) {
-    return BookingModel(
-        startDate: b.startTime,
-        endDate: b.finishTime,
-        numberPlate: b.numberPlate,
-        departure: b.departure,
-        arrival: b.arrival,
-        title: b.name,
-        firstDriverName: b.firstDriveId ?? "TBD",
-        secondDriverName: b.secondDriverId,
-        lastModifiedAt: b.lastModifiedAt,
-        currency: "X",
-        distanceUnit: b.unitLength.name,
-        stausColor:
-            _getStatusColorOfbookingListtatusId(b.bookingStatusId.statusId),
-        statusText: b.bookingStatusId.label);
   }
 
   /// Returns a summary of all [bookingList] as a string

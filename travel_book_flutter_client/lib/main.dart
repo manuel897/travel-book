@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_book_flutter_client/data/booking/booking_repository.dart';
 import 'package:travel_book_flutter_client/data/booking/booking_service.dart';
 import 'package:travel_book_flutter_client/ui/core/app_color_theme.dart';
@@ -10,7 +11,13 @@ import 'package:travel_book_flutter_client/ui/home/home_view_model.dart';
 import 'package:travel_book_flutter_client/ui/user/user_view.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    Provider(create: (context) => BookingService()),
+    Provider(
+        create: (context) => BookingRepository(bookingService: context.read())),
+    ChangeNotifierProvider(
+        create: (context) => HomeViewModel(bookingRepository: context.read())),
+  ], child: MyApp()));
 }
 
 final _router = GoRouter(initialLocation: AppSection.home.path, routes: [
@@ -19,9 +26,8 @@ final _router = GoRouter(initialLocation: AppSection.home.path, routes: [
       routes: <RouteBase>[
         GoRoute(
           path: AppSection.home.path,
-          builder: (_, __) => HomeView(
-            viewModel: HomeViewModel(
-                BookingRepository(bookingService: BookingService())),
+          builder: (context, _) => HomeView(
+            viewModel: context.read(),
           ),
         ),
         GoRoute(

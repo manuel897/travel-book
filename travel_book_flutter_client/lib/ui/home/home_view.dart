@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_book_flutter_client/ui/home/calender/day_view.dart';
+import 'package:travel_book_flutter_client/ui/home/calender/day_view_model.dart';
 import 'package:travel_book_flutter_client/ui/home/calender_overview_list.dart';
 import 'package:travel_book_flutter_client/ui/home/home_view_model.dart';
 
@@ -58,7 +60,13 @@ class _HomeViewState extends State<HomeView> {
                         Navigator.push(
                             context,
                             MaterialPageRoute<void>(
-                              builder: (context) => DayView(day: selectedDate),
+                              builder: (context) => DayView(
+                                day: selectedDate,
+                                // TODO get booking repo here
+                                dayViewModel: DayViewModel(
+                                    bookingRepository: context.read(),
+                                    selectedDate: selectedDate),
+                              ),
                             ));
                         // TODO open details page
                       })
