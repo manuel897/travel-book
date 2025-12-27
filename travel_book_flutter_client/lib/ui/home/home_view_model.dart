@@ -20,10 +20,12 @@ class HomeViewModel extends ChangeNotifier {
         ));
 
   /// Get rows to display in the calender list view based on the
-  List<DataRow> getCalenderRows(
-      {required DateTime startDate,
-      required DateTime endDate,
-      required List<BookingModel> bookingList}) {
+  List<DataRow> getCalenderRows({
+    required DateTime startDate,
+    required DateTime endDate,
+    required List<BookingModel> bookingList,
+    required void Function(DateTime selectedDate) onSelectDate,
+  }) {
     final daysOfStartMonthCount = DateTimeRange(
             start: DateTime(startDate.year, startDate.month),
             end: DateTime(startDate.year, startDate.month + 1))
@@ -55,6 +57,9 @@ class HomeViewModel extends ChangeNotifier {
       final String bookingCellText =
           _getBookingDescription(bookingListForDay ?? []);
       rows.add(DataRow(
+          onSelectChanged: (isSelected) {
+            if (isSelected != null && isSelected) onSelectDate(date);
+          },
           color: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> s) {
             if (isCurrentMonthSelected && i == today.day) {
               return Colors.grey;

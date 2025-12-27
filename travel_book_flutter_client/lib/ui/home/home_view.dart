@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_book_flutter_client/ui/home/calender/day_view.dart';
 import 'package:travel_book_flutter_client/ui/home/calender_overview_list.dart';
 import 'package:travel_book_flutter_client/ui/home/home_view_model.dart';
 
@@ -44,6 +45,7 @@ class _HomeViewState extends State<HomeView> {
             final endDate = widget.viewModel.state.value?.endDate;
             final bookings =
                 widget.viewModel.state.value?.bookingsSearchResult ?? [];
+            print('$startDate - $endDate with ${bookings.length} length');
             return CalenderOverviewList(
               startDate: startDate,
               endDate: endDate,
@@ -51,7 +53,15 @@ class _HomeViewState extends State<HomeView> {
                   ? widget.viewModel.getCalenderRows(
                       startDate: startDate,
                       endDate: endDate,
-                      bookingList: bookings)
+                      bookingList: bookings,
+                      onSelectDate: (selectedDate) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => DayView(day: selectedDate),
+                            ));
+                        // TODO open details page
+                      })
                   : [],
             );
           },
