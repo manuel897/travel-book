@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_book_flutter_client/ui/home/calender/booking_tile.dart';
 import 'package:travel_book_flutter_client/ui/home/calender/day_view_model.dart';
 
 class DayView extends StatefulWidget {
@@ -38,11 +39,18 @@ class _DayViewState extends State<DayView> {
                     ...(widget.dayViewModel.state.value?.bookingsSearchResult ??
                             [])
                         .map((b) {
-                      return Card(
-                        child: Text(
-                            "${b.departure} to ${b.arrival} by ${b.firstDriverName}"),
+                      return Container(
+                        constraints:
+                            BoxConstraints(maxWidth: constraints.maxWidth),
+                        child: SizedBox(
+                          height: 70,
+                          // width: constraints.maxWidth,
+                          child: BookingTile(
+                            booking: b,
+                          ),
+                        ),
                       );
-                    })
+                    }),
                   ],
                 ),
               ));
