@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:travel_book_flutter_client/data/booking/booking_repository.dart';
+import 'package:travel_book_flutter_client/ui/home/calender_search_panel.dart';
 import 'package:travel_book_flutter_client/ui/home/home_ui_state.dart';
 import 'package:travel_book_flutter_client/utils/booking_mapper.dart';
 
@@ -133,5 +134,23 @@ class HomeViewModel extends ChangeNotifier {
   /// Returns a summary of all [bookingList] as a string
   String _getBookingDescription(List<BookingModel> bookingList) {
     return "${bookingList.length} BOOKING(S) FOUND.";
+  }
+
+  void onChangeMonth(Month? m) {
+    final selectedYear = state.value?.startDate.year;
+    if (m == null || selectedYear == null) {
+      return;
+    }
+
+    onChangeStartDate(DateTime(selectedYear, m.intVal));
+  }
+
+  void onChangeYear(int? y) {
+    final selectedMonth = state.value?.startDate.month;
+    if (y == null || selectedMonth == null) {
+      return;
+    }
+
+    onChangeStartDate(DateTime(y, selectedMonth));
   }
 }

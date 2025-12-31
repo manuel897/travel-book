@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:travel_book_flutter_client/ui/home/calender/day_view.dart';
 import 'package:travel_book_flutter_client/ui/home/calender/day_view_model.dart';
 import 'package:travel_book_flutter_client/ui/home/calender_overview_list.dart';
+import 'package:travel_book_flutter_client/ui/home/calender_search_panel.dart';
 import 'package:travel_book_flutter_client/ui/home/home_view_model.dart';
 
 class HomeView extends StatefulWidget {
@@ -25,26 +26,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            // OutlinedButton(
-            //   onPressed: () async {
-            //     final selection = await showDatePicker(
-            //         context: context,
-            //         firstDate: DateTime(2025),
-            //         lastDate: DateTime(2100),
-            //         helpText: "Select start date",
-            //         currentDate: widget.viewModel.state.value?.startDate,
-            //         initialDatePickerMode: DatePickerMode.year);
-            //
-            //     if (selection != null) {
-            //       widget.viewModel.onChangeStartDate(selection);
-            //     }
-            //   },
-            //   child: const Text('Select start date'),
-            // ),
-          ],
-        ),
+        CalenderSearchPanel(homeViewModel: context.read()),
         ListenableBuilder(
           listenable: widget.viewModel.state,
           builder: (context, _) {
