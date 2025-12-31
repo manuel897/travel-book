@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_book_flutter_client/utils/date_utils.dart';
 
 class DateRangeRow extends StatelessWidget {
   final DateTime startDate;
@@ -10,10 +11,6 @@ class DateRangeRow extends StatelessWidget {
     required this.endDate,
   });
 
-  String _formatDate(DateTime date) {
-    return "${date.day}/${date.month}/${date.year}";
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -21,7 +18,7 @@ class DateRangeRow extends StatelessWidget {
       children: [
         // End date on the left
         Text(
-          _formatDate(startDate),
+          formatDate(startDate),
           style: Theme.of(context).textTheme.titleLarge,
         ),
 
@@ -32,7 +29,7 @@ class DateRangeRow extends StatelessWidget {
 
         // Start date on the right
         Text(
-          _formatDate(endDate),
+          formatDate(endDate),
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ],

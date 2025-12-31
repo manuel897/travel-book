@@ -25,21 +25,26 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        OutlinedButton(
-            onPressed: () async {
-              final selection = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(3000),
-                  helpText: "Select start date",
-                  currentDate: widget.viewModel.state.value?.startDate,
-                  initialDatePickerMode: DatePickerMode.year);
+        Row(
+          children: [
+            OutlinedButton(
+              onPressed: () async {
+                final selection = await showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2025),
+                    lastDate: DateTime(2100),
+                    helpText: "Select start date",
+                    currentDate: widget.viewModel.state.value?.startDate,
+                    initialDatePickerMode: DatePickerMode.year);
 
-              if (selection != null) {
-                widget.viewModel.onChangeStartDate(selection);
-              }
-            },
-            child: const Text('Select start date')),
+                if (selection != null) {
+                  widget.viewModel.onChangeStartDate(selection);
+                }
+              },
+              child: const Text('Select start date'),
+            ),
+          ],
+        ),
         ListenableBuilder(
           listenable: widget.viewModel.state,
           builder: (context, _) {
@@ -47,7 +52,6 @@ class _HomeViewState extends State<HomeView> {
             final endDate = widget.viewModel.state.value?.endDate;
             final bookings =
                 widget.viewModel.state.value?.bookingsSearchResult ?? [];
-            print('$startDate - $endDate with ${bookings.length} length');
             return CalenderOverviewList(
               startDate: startDate,
               endDate: endDate,

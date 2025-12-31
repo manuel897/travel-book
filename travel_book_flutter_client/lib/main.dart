@@ -53,6 +53,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData(
           brightness: Brightness.dark,
           colorScheme: darkColorScheme,
+          textTheme: professionalTextTheme,
           useMaterial3: true),
       routerConfig: _router,
     );

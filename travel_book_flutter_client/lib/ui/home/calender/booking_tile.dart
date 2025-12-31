@@ -4,20 +4,29 @@ import 'package:travel_book_flutter_client/ui/booking/booking_model.dart';
 class BookingTile extends StatelessWidget {
   final BookingModel booking;
 
-  BookingTile({super.key, required this.booking});
+  const BookingTile({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.black38,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       child: Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(booking.departure),
-            const Text("-"),
-            Text(booking.arrival),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 0.8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                booking.departure,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const Text("-"),
+              Text(
+                booking.arrival,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
+          ),
         ),
       ),
     );
