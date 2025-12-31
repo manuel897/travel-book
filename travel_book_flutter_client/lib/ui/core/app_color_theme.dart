@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
+/// https://coolors.co/222632-8f8f49-333645-76809b-9bdef1-595779-c99eff-fc9861-fdd86e-c09dee
 /// Base palette
 const Color _pacificCyan = Color(0xFF0091AD);
-const Color _plumBark = Color.fromARGB(255, 160, 32, 240);
-const Color _grey = Color.fromARGB(255, 74, 82, 90);
-const Color _darkGrey = Color.fromARGB(255, 36, 39, 43);
-const Color _deepMocha = Color(0xFF443730);
+const surface = Color.fromARGB(255, 51, 54, 69);
+const Color _darkGrey = Color.fromARGB(255, 34, 38, 50);
 const Color _sandyBrown = Color(0xFFF4A259);
 const Color _hotFuchsia = Color(0xFFFF3366);
-const Color _fern = Color(0xFF607744);
+
+const Color confirmed = Color.fromARGB(255, 143, 143, 73);
+const Color danger = Color.fromARGB(255, 252, 152, 97);
+const Color warning = Color.fromARGB(255, 253, 216, 110);
 
 const ColorScheme darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
 
   // Brand / primary
-  primary: _plumBark,
+  primary: Color.fromARGB(255, 118, 128, 155),
   onPrimary: Colors.black,
 
   primaryContainer: Colors.orange,
@@ -24,7 +26,7 @@ const ColorScheme darkColorScheme = ColorScheme(
   secondary: Colors.orange,
   onSecondary: Colors.black,
 
-  secondaryContainer: _grey,
+  secondaryContainer: surface,
   onSecondaryContainer: Colors.black,
 
   // Accent

@@ -9,24 +9,29 @@ class BookingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          width: 3,
+          color: booking.statusColor.withAlpha(100),
+        ),
+      ),
       color: Theme.of(context).colorScheme.secondaryContainer,
-      child: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 0.8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                booking.departure,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const Text("-"),
-              Text(
-                booking.arrival,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0, right: 0.8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              booking.departure,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const Text("-"),
+            Text(
+              booking.arrival,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ],
         ),
       ),
     );

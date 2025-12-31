@@ -16,33 +16,36 @@ class _CalenderSearchPanelState extends State<CalenderSearchPanel> {
   @override
   Widget build(BuildContext context) {
     var monthCode = widget.homeViewModel.state.value?.startDate.month;
-    return Container(
-      color: Theme.of(context).colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              DropdownMenu<Month>(
-                  onSelected: (m) => widget.homeViewModel.onChangeMonth(m),
-                  initialSelection:
-                      monthCode != null ? Month.fromCode(monthCode) : null,
-                  label: const Text("Month"),
-                  dropdownMenuEntries: Month.values
-                      .map((m) => DropdownMenuEntry(label: m.label, value: m))
-                      .toList()),
-              DropdownMenu<int>(
-                  onSelected: (y) => widget.homeViewModel.onChangeYear(y),
-                  initialSelection:
-                      widget.homeViewModel.state.value?.startDate.year,
-                  label: const Text("Year"),
-                  dropdownMenuEntries: List<int>.generate(10, (i) => 2025 + i)
-                      .map((y) =>
-                          DropdownMenuEntry(value: y, label: y.toString()))
-                      .toList())
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Card(
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                DropdownMenu<Month>(
+                    onSelected: (m) => widget.homeViewModel.onChangeMonth(m),
+                    initialSelection:
+                        monthCode != null ? Month.fromCode(monthCode) : null,
+                    label: const Text("Month"),
+                    dropdownMenuEntries: Month.values
+                        .map((m) => DropdownMenuEntry(label: m.label, value: m))
+                        .toList()),
+                DropdownMenu<int>(
+                    onSelected: (y) => widget.homeViewModel.onChangeYear(y),
+                    initialSelection:
+                        widget.homeViewModel.state.value?.startDate.year,
+                    label: const Text("Year"),
+                    dropdownMenuEntries: List<int>.generate(10, (i) => 2025 + i)
+                        .map((y) =>
+                            DropdownMenuEntry(value: y, label: y.toString()))
+                        .toList())
+              ],
+            ),
           ),
         ),
       ),

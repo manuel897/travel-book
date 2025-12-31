@@ -13,5 +13,5 @@ BookingModel buildBookingModel({DateTime? startDate}) => BookingModel(
     lastModifiedAt: DateTime(0),
     currency: '',
     distanceUnit: '',
-    stausColor: const Color(0),
+    statusColor: const Color(0),
     statusText: '');

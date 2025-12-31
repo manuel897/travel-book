@@ -21,7 +21,7 @@ class BookingModel with _$BookingModel {
     double? plannedDistance,
     required String currency,
     required String distanceUnit,
-    required Color stausColor,
+    required Color statusColor,
     required String statusText,
   }) = _BookingModel;
 }
