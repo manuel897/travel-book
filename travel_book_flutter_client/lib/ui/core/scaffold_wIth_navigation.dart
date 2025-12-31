@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_book_flutter_client/ui/core/app_section.dart';
 import 'package:travel_book_flutter_client/ui/core/shared.dart';
+import 'package:travel_book_flutter_client/ui/home/home_view_model.dart';
 
 class ScaffoldWithNavigation extends StatefulWidget {
   final Widget screen;
@@ -25,6 +27,23 @@ class _ScaffoldWithNavigationState extends State<ScaffoldWithNavigation> {
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text(_selectedAppSection.label),
         ),
+        // TODO: Change the floating button according to the screen
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.search_rounded),
+            onPressed: () async {
+              final viewModel = context.read<HomeViewModel>();
+              final selection = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(2025),
+                  lastDate: DateTime(2100),
+                  helpText: "Select start date",
+                  currentDate: viewModel.state.value?.startDate,
+                  initialDatePickerMode: DatePickerMode.year);
+
+              if (selection != null) {
+                viewModel.onChangeStartDate(selection);
+              }
+            }),
         body: Row(
           children: [
             if (screenSize.width > maxMobileScreenSize)

@@ -17,11 +17,11 @@ const ColorScheme darkColorScheme = ColorScheme(
   primary: _plumBark,
   onPrimary: Colors.black,
 
-  primaryContainer: Color(0xFF003E4A),
+  primaryContainer: Colors.orange,
   onPrimaryContainer: Color(0xFF9BE7F3),
 
   // Secondary (support / success-like)
-  secondary: _fern,
+  secondary: Colors.orange,
   onSecondary: Colors.black,
 
   secondaryContainer: _grey,

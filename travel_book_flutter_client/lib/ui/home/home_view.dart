@@ -27,22 +27,22 @@ class _HomeViewState extends State<HomeView> {
       children: [
         Row(
           children: [
-            OutlinedButton(
-              onPressed: () async {
-                final selection = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(2025),
-                    lastDate: DateTime(2100),
-                    helpText: "Select start date",
-                    currentDate: widget.viewModel.state.value?.startDate,
-                    initialDatePickerMode: DatePickerMode.year);
-
-                if (selection != null) {
-                  widget.viewModel.onChangeStartDate(selection);
-                }
-              },
-              child: const Text('Select start date'),
-            ),
+            // OutlinedButton(
+            //   onPressed: () async {
+            //     final selection = await showDatePicker(
+            //         context: context,
+            //         firstDate: DateTime(2025),
+            //         lastDate: DateTime(2100),
+            //         helpText: "Select start date",
+            //         currentDate: widget.viewModel.state.value?.startDate,
+            //         initialDatePickerMode: DatePickerMode.year);
+            //
+            //     if (selection != null) {
+            //       widget.viewModel.onChangeStartDate(selection);
+            //     }
+            //   },
+            //   child: const Text('Select start date'),
+            // ),
           ],
         ),
         ListenableBuilder(
