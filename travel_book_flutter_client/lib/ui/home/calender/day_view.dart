@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_book_flutter_client/ui/home/calender/booking_tile.dart';
+import 'package:travel_book_flutter_client/ui/home/booking/booking_tile.dart';
 import 'package:travel_book_flutter_client/ui/home/calender/day_view_model.dart';
 
 import '../../../utils/date_utils.dart';

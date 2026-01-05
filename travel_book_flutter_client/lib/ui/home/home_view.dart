@@ -48,7 +48,6 @@ class _HomeViewState extends State<HomeView> {
                             MaterialPageRoute<void>(
                               builder: (context) => DayView(
                                 day: selectedDate,
-                                // TODO get booking repo here
                                 dayViewModel: DayViewModel(
                                     bookingRepository: context.read(),
                                     selectedDate: selectedDate),
