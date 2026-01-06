@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:travel_book_flutter_client/data/booking/booking_repository.dart';
-import 'package:travel_book_flutter_client/ui/home/calender_search_panel.dart';
+import 'package:travel_book_flutter_client/ui/home/calender/models/month.dart';
 import 'package:travel_book_flutter_client/ui/home/home_ui_state.dart';
 import 'package:travel_book_flutter_client/utils/booking_mapper.dart';
 

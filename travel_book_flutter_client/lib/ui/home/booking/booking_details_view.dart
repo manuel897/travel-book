@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 import 'package:travel_book_flutter_client/ui/booking/booking_model.dart';
 import 'package:travel_book_flutter_client/utils/date_utils.dart';
 
+/// Detailed view of a round trip booking
 class BookingDetailsView extends StatelessWidget {
   final BookingModel booking;
 
@@ -26,7 +28,7 @@ class BookingDetailsView extends StatelessWidget {
               ),
             ),
             Text(
-              formatDate(booking.startDate),
+              booking.title,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const Expanded(
@@ -36,15 +38,65 @@ class BookingDetailsView extends StatelessWidget {
         ),
       ),
       SingleChildScrollView(
+          child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          color: Theme.of(context).colorScheme.secondaryContainer,
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            height: 70,
-            // width: constraints.maxWidth,
-            child: Text(booking.departure),
-          )
-        ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TimelineTile(
+                alignment: TimelineAlign.center,
+                endChild: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(booking.departure.toUpperCase())),
+                ),
+                startChild: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(formatDateTime(booking.startDate))),
+                ),
+                isFirst: true,
+              ),
+              TimelineTile(
+                alignment: TimelineAlign.center,
+                endChild: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(booking.arrival.toUpperCase())),
+                ),
+              ),
+              TimelineTile(
+                alignment: TimelineAlign.center,
+                endChild: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(booking.departure.toUpperCase())),
+                ),
+                startChild: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(formatDateTime(booking.endDate))),
+                ),
+                isLast: true,
+              ),
+              const Divider(
+                height: 24,
+                thickness: 1,
+                indent: 16,
+                endIndent: 16,
+                color: Colors.white,
+              ),
+              Text(booking.firstDriverName)
+            ],
+          ),
+        ),
       )),
     ]);
   }

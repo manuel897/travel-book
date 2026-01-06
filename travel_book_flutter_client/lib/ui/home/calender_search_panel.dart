@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travel_book_flutter_client/ui/home/home_view_model.dart';
 
+import 'calender/models/month.dart';
+
 class CalenderSearchPanel extends StatefulWidget {
   final HomeViewModel homeViewModel;
 
@@ -50,33 +52,5 @@ class _CalenderSearchPanelState extends State<CalenderSearchPanel> {
         ),
       ),
     );
-  }
-}
-
-enum Month {
-  jan("January", 1),
-  feb("February", 2),
-  mar("March", 3),
-  apr("April", 4),
-  may("May", 5),
-  jun("June", 6),
-  jul("July", 7),
-  aug("August", 8),
-  sep("September", 9),
-  oct("October", 10),
-  nov("November", 11),
-  dec("December", 12);
-
-  final String label;
-  final int intVal;
-
-  const Month(this.label, this.intVal);
-
-  static Month fromCode(int code) {
-    final m = Month.values.where((e) => e.intVal == code).firstOrNull;
-    if (m == null) {
-      throw Exception("Could not parse month code: $code");
-    }
-    return m;
   }
 }

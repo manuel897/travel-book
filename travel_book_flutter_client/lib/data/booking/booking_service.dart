@@ -3,7 +3,7 @@ import 'package:travel_book_flutter_client/data/booking/booking.dart';
 class BookingService {
   Future<List<Booking>> findBy({required DateTime start, DateTime? end}) async {
     final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
+    final today = DateTime.now();
 
     /// TODO remove placeholder
     final booking = Booking(
