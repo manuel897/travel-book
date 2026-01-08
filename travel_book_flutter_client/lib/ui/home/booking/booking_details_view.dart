@@ -11,35 +11,34 @@ class BookingDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const keyTextStyle = TextStyle(color: Colors.grey);
+    const valueTextStyle = TextStyle(fontWeight: FontWeight.bold);
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton.outlined(
-                  color: Theme.of(context).colorScheme.primary,
-                  icon: const Icon(Icons.arrow_back_rounded),
-                  onPressed: () => Navigator.pop(context),
-                ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton.outlined(
+                color: Theme.of(context).colorScheme.primary,
+                icon: const Icon(Icons.arrow_back_rounded),
+                onPressed: () => Navigator.pop(context),
               ),
             ),
-            Text(
-              booking.title,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const Expanded(
-              child: SizedBox(),
-            ),
-          ],
-        ),
+          ),
+          Text(
+            booking.title,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const Expanded(
+            child: SizedBox(),
+          ),
+        ],
       ),
       SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Card(
           color: Theme.of(context).colorScheme.secondaryContainer,
           child: Column(
@@ -91,9 +90,82 @@ class BookingDetailsView extends StatelessWidget {
                 thickness: 1,
                 indent: 16,
                 endIndent: 16,
-                color: Colors.white,
+                color: Colors.grey,
               ),
-              Text(booking.firstDriverName)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Table(
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: IntrinsicColumnWidth(),
+                    1: IntrinsicColumnWidth(),
+                    // 2: FixedColumnWidth(64),
+                  },
+                  children: [
+                    TableRow(
+                      children: <Widget>[
+                        const Text(
+                          "Driver A ",
+                          style: keyTextStyle,
+                        ),
+                        Text(
+                          booking.firstDriverName,
+                          style: valueTextStyle,
+                        )
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text(
+                          "Driver B ",
+                          style: keyTextStyle,
+                        ),
+                        Text(
+                          booking.secondDriverName ?? "-",
+                          style: valueTextStyle,
+                        )
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text(
+                          "Number Plate ",
+                          style: keyTextStyle,
+                        ),
+                        Text(
+                          booking.numberPlate,
+                          style: valueTextStyle,
+                        )
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text(
+                          "Initial Quote ",
+                          style: keyTextStyle,
+                        ),
+                        Text(
+                          booking.initialQuote != null
+                              ? booking.initialQuote.toString()
+                              : "-",
+                          style: valueTextStyle,
+                        )
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text(
+                          "Last Modified ",
+                          style: keyTextStyle,
+                        ),
+                        Text(
+                          booking.lastModifiedAt.toString(),
+                          style: valueTextStyle,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
         ),
