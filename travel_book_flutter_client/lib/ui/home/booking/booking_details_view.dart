@@ -116,6 +116,19 @@ class BookingDetailsView extends StatelessWidget {
                     TableRow(
                       children: <Widget>[
                         const Text(
+                          "Status ",
+                          style: keyTextStyle,
+                        ),
+                        Text(
+                          booking.statusText.toUpperCase(),
+                          style: valueTextStyle.copyWith(
+                              color: booking.statusColor),
+                        )
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        const Text(
                           "Notes ",
                           style: keyTextStyle,
                         ),
