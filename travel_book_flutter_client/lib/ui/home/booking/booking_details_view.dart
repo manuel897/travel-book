@@ -18,12 +18,15 @@ class BookingDetailsView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: IconButton.outlined(
-                color: Theme.of(context).colorScheme.primary,
-                icon: const Icon(Icons.arrow_back_rounded),
-                onPressed: () => Navigator.pop(context),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton.outlined(
+                  color: Theme.of(context).colorScheme.primary,
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  onPressed: () => Navigator.pop(context),
+                ),
               ),
             ),
           ),
@@ -85,12 +88,12 @@ class BookingDetailsView extends StatelessWidget {
                 ),
                 isLast: true,
               ),
-              const Divider(
+              Divider(
                 height: 24,
                 thickness: 1,
                 indent: 16,
                 endIndent: 16,
-                color: Colors.grey,
+                color: Colors.grey.withAlpha(100),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -101,6 +104,27 @@ class BookingDetailsView extends StatelessWidget {
                     // 2: FixedColumnWidth(64),
                   },
                   children: [
+                    TableRow(
+                      children: <Widget>[
+                        Text(
+                          "DETAILS",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Container()
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        const Text(
+                          "Notes ",
+                          style: keyTextStyle,
+                        ),
+                        Text(
+                          booking.notes ?? "-",
+                          style: valueTextStyle,
+                        )
+                      ],
+                    ),
                     TableRow(
                       children: <Widget>[
                         const Text(
@@ -133,6 +157,20 @@ class BookingDetailsView extends StatelessWidget {
                         ),
                         Text(
                           booking.numberPlate,
+                          style: valueTextStyle,
+                        )
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text(
+                          "Planned Distance ",
+                          style: keyTextStyle,
+                        ),
+                        Text(
+                          booking.plannedDistance != null
+                              ? "${booking.initialQuote.toString()} ${booking.distanceUnit}"
+                              : "-",
                           style: valueTextStyle,
                         )
                       ],

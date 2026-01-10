@@ -13,7 +13,7 @@ class BookingModel with _$BookingModel {
     required String departure,
     required String arrival,
     required String title,
-    String? description,
+    String? notes,
     required String firstDriverName,
     String? secondDriverName,
     required DateTime lastModifiedAt,

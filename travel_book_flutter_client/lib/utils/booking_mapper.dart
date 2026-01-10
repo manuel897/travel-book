@@ -8,6 +8,7 @@ class BookingMapper {
     return BookingModel(
         startDate: b.startTime,
         endDate: b.finishTime,
+        notes: b.notes,
         numberPlate: b.numberPlate,
         departure: b.departure,
         arrival: b.arrival,

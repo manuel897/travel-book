@@ -8,6 +8,7 @@ class BookingService {
     /// TODO remove placeholder
     final booking = Booking(
         name: "xyz - trip to place b",
+        notes: "this is a remark",
         numberPlate: "ab 123",
         departure: 'place a',
         arrival: 'place b',
@@ -19,6 +20,7 @@ class BookingService {
         lastModifiedAt: DateTime.now());
     final booking2 = Booking(
         name: "abc - trip to place d",
+        notes: "this is a remark",
         numberPlate: "ba 123",
         departure: 'place c',
         arrival: 'place d',
@@ -30,6 +32,7 @@ class BookingService {
         lastModifiedAt: DateTime.now());
     final booking3 = Booking(
         name: "abc - trip to place d",
+        notes: "this is a remark",
         numberPlate: "ba 123",
         departure: 'place c',
         arrival: 'place d',
