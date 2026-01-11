@@ -11,6 +11,7 @@ import 'package:travel_book_flutter_client/ui/home/home_view_model.dart';
 import 'package:travel_book_flutter_client/ui/user/user_view.dart';
 
 void main() {
+  // debugPaintSizeEnabled = true;
   runApp(MultiProvider(providers: [
     Provider(create: (context) => BookingService()),
     Provider(
