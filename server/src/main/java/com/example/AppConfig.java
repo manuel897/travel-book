@@ -13,23 +13,22 @@ import org.springframework.transaction.TransactionManager;
 
 import javax.sql.DataSource;
 
-@EnableJdbcRepositories
 @Configuration
-public class AppConfig extends AbstractJdbcConfiguration {
+public class AppConfig {
 
-    @Bean
-    @ConfigurationProperties("app.datasource")
-    DataSource dataSource() {
-        return DataSourceBuilder.create().build();
-    }
-
-    @Bean
-    NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) {
-        return new NamedParameterJdbcTemplate(dataSource);
-    }
-
-    @Bean
-    TransactionManager transactionManager(DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
-    }
+//    @Bean
+//    @ConfigurationProperties("app.datasource")
+//    DataSource dataSource() {
+//        return DataSourceBuilder.create().build();
+//    }
+//
+//    @Bean
+//    NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) {
+//        return new NamedParameterJdbcTemplate(dataSource);
+//    }
+//
+//    @Bean
+//    TransactionManager transactionManager(DataSource dataSource) {
+//        return new DataSourceTransactionManager(dataSource);
+//    }
 }
