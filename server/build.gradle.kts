@@ -1,6 +1,12 @@
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.4.1"
+    id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -23,11 +29,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jdbc
-    implementation("org.springframework.data:spring-data-jdbc:4.0.0-M1")
-
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jdbc
-    implementation("org.springframework.boot:spring-boot-starter-data-jdbc:3.4.2")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation("org.postgresql", "postgresql", "42.7.4")
@@ -36,7 +39,7 @@ dependencies {
 //    implementation("org.apache.logging.log4j:log4j-api")
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2
-    implementation("org.springframework.boot:spring-boot-starter-log4j2:3.4.2")
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
 
 }
 
@@ -44,8 +47,6 @@ tasks.test {
     useJUnitPlatform()
 }
 
-configurations {
-    all {
-        exclude("org.springframework.boot", "spring-boot-starter-logging")
-    }
+configurations.all {
+    exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
 }
