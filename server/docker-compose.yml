@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # Optional: expose to host only if you want to connect with a local psql/GUI.
+    # ports:
+    #   - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    env_file:
+      - .env
+    image: travel-book-server:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - "8080:8080"
+    # mount read-only config file
+    volumes:
+      - ./config/customer_config.yml:/config/customer_config.yml:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Optional: activate a profile if you use them
+      # SPRING_PROFILES_ACTIVE: default
+      # Optional: JVM tuning knobs
+      JAVA_OPTS: ""
+
+volumes:
+  pgdata:

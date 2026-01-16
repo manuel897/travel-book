@@ -1,0 +1,8 @@
+distance_unit_of_measurement: <km/mi>
+db_url: jdbc:postgresql://postgres:5432/<db>
+db_user: <user>
+db_password: ${DB_PASSWORD}
+db_ssl: true
+db_poolsize: 30
+sslmode: verify-ca
+sslrootcert: path/to.crt
