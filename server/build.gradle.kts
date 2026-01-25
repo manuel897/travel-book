@@ -15,7 +15,6 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-
 }
 
 dependencies {
@@ -41,6 +40,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
 
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
+
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.test {
