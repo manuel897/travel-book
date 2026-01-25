@@ -17,7 +17,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = RestServiceApplication.class)
 @Transactional
-@ContextConfiguration(classes = AppConfig.class)
+//@ContextConfiguration(classes = AppConfig.class)
 public class BookingCrudRepoTest {
     @Autowired
     BookingDataSource bookingCrudRepo;
