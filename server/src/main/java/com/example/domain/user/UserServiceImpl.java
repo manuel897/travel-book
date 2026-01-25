@@ -8,11 +8,11 @@ import java.util.Optional;
 
 @Component
 public class UserServiceImpl implements UserService {
-    private CreateUser createUser;
-    private UserRepository userRepository;
+    private final CreateDriverUser createDriverUser;
+    private final UserRepository userRepository;
 
-    UserServiceImpl(CreateUser createUser, UserRepository userRepository) {
-        this.createUser = createUser;
+    UserServiceImpl(CreateDriverUser createDriverUser, UserRepository userRepository) {
+        this.createDriverUser = createDriverUser;
         this.userRepository = userRepository;
     }
 
@@ -23,6 +23,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserInputDto userInput) {
-        createUser.call(userInput);
+        createDriverUser.call(userInput);
     }
 }

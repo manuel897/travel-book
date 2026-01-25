@@ -2,18 +2,21 @@ package com.example.domain.user;
 
 import com.example.data.user.UserDataModel;
 import com.example.models.user.UserInputDto;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
-public class CreateUser {
+public class CreateDriverUser {
     private final UserRepository userRepository;
     private final UserPresenter userPresenter;
+    private final PasswordEncoder passwordEncoder;
 
-    CreateUser(UserRepository userRepository, UserPresenter userPresenter) {
+    CreateDriverUser(UserRepository userRepository, UserPresenter userPresenter, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userPresenter = userPresenter;
+        this.passwordEncoder = passwordEncoder;
     }
 
     void call(UserInputDto userInput) {
@@ -26,10 +29,10 @@ public class CreateUser {
 
         final UserDataModel user = new UserDataModel(
                 userInput.getUsername(),
-                userInput.getPassword(), // TODO save hash
+                passwordEncoder.encode(userInput.getPassword()),
                 userInput.getFirstName(),
                 userInput.getLastName(),
-                0 // TODO decide logic for driver
+                UserRole.DRIVER.getCode()
         );
 
         userRepository.createUser(user);
