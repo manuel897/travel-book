@@ -6,16 +6,16 @@ Java backend for Travel Book. The client should be able to create and manage boo
 * Build tool: Gradle
  
 ## How to run the server as a docker container?
-1. Create files `config/customer_config.yml` and '.env'. See examples.
+1. Create files `config/customer_config.yml` and `.env`. See examples.
 2. Ensure that docker engine is running. Run:
      docker info
 3. Run:
-     docker compose up --buld
+     docker compose up --build
 
 ## How to run the server locally?
 1. Run:
    `./gradlew build`
-2. Create files `config/customer_config.yml` and '.env'. See examples.
+2. Create files `config/customer_config.yml` and `,env`. See examples.
 3. Ensure that PostgreSQL is running and connection using the connection info in the previous step is possible.
 4. Run:
    `./gradlew bootRun`
