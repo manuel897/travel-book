@@ -11,12 +11,10 @@ import java.util.Optional;
 public class CreateDriverUser {
     private final UserRepository userRepository;
     private final UserPresenter userPresenter;
-    private final PasswordEncoder passwordEncoder;
 
-    CreateDriverUser(UserRepository userRepository, UserPresenter userPresenter, PasswordEncoder passwordEncoder) {
+    CreateDriverUser(UserRepository userRepository, UserPresenter userPresenter) {
         this.userRepository = userRepository;
         this.userPresenter = userPresenter;
-        this.passwordEncoder = passwordEncoder;
     }
 
     void call(UserInputDto userInput) {
@@ -29,7 +27,8 @@ public class CreateDriverUser {
 
         final UserDataModel user = new UserDataModel(
                 userInput.getUsername(),
-                passwordEncoder.encode(userInput.getPassword()),
+                // TODO: encode password
+                userInput.getPassword(),
                 userInput.getFirstName(),
                 userInput.getLastName(),
                 UserRole.DRIVER.getCode()

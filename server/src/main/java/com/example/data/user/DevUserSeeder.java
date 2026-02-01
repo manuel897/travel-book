@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -24,13 +23,11 @@ public class DevUserSeeder implements CommandLineRunner {
     String env;
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public DevUserSeeder(BookingRepository bookingRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public DevUserSeeder(BookingRepository bookingRepository, UserRepository userRepository) {
         this.bookingRepository = bookingRepository;
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -106,7 +103,7 @@ public class DevUserSeeder implements CommandLineRunner {
         ;
         UserDataModel demoDriver = new UserDataModel(
                 demoDriverUsername,
-                passwordEncoder.encode("password"),
+                "password",
                 "bob",
                 "driver",
                 UserRole.DRIVER.getCode()
@@ -114,7 +111,7 @@ public class DevUserSeeder implements CommandLineRunner {
 
         UserDataModel demoManager = new UserDataModel(
                 demoManagerUsername,
-                passwordEncoder.encode("password"),
+                "password",
                 "alice",
                 "demo",
                 UserRole.MANAGER.getCode()
