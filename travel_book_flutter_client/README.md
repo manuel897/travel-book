@@ -1,16 +1,13 @@
-# travel_book_flutter_client
+# Travel Book Flutter Client
 
-Flutter client for TravelBook
+## What is this?
 
-## Getting Started
+This is a cross-platform client for travel book that uses the [Flutter](https://flutter.dev/) framework.
 
-This project is a starting point for a Flutter application.
+## How to get started?
 
-A few resources to get you started if this is your first Flutter project:
+1. Setup an IDE for flutter.
+2. Start the app - see the flutter docs for details.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> Note that the app is tested only in **web** for the moment. It should also be compatible with all platforms supported
+> by Flutter. 
